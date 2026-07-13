@@ -1,0 +1,15 @@
+TeleBirr Transaction Summary
+===================================
+Customer             Total Spend
+-----------------------------------
+Dawed Abebe              550.75
+Almaz Bekele             500.80
+Samuel Tesfaye           350.00
+Ayele Admasu             300.00
+Eve Worku                125.75
+Tigist Abebe             120.00
+Dawit Hailu              100.00
+Daniel Tesfaye            25.00
+===================================
+Total customers: 8
+Total spend: 2072.30 ETB
