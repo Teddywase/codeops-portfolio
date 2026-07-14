@@ -1,0 +1,8 @@
+Paracetamol,80
+Amoxicillin,-2
+Ibuprofen,31
+Vitamin C,3
+Antimalarial,15
+ORS,5
+Aspirin,42
+Cough Syrup,7
