@@ -1,0 +1,156 @@
+<!-- 
+Exercises
+Question 1. Build a registration form for a fictional Ethio Telecom service with name, email, tel (validated to
++251 and 9 digits), and a branch select (Bole, Kazanchis, Piassa). Every control labelled;
+submission method chosen and justified in a comment.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethio Telecom · Registration & Ethiopian Airlines Flights</title>
+    <meta name="description" content="Register for Ethio Telecom services and view Ethiopian Airlines flight schedules. Complete with accessible forms, tables, and media.">
+</head>
+<body>
+    <h1>Exercise 1: Ethio Telecom Registration</h1>
+    <form action="/register" method="post">
+        <label for="reg_name">Full name</label><br>
+        <input type="text" id="reg_name" name="name" placeholder="Enter your full name" required><br>
+
+        <label for="reg_email">Email address</label><br>
+        <input type="email" id="reg_email" name="email" placeholder="you@example.com" required><br>
+
+        <label for="reg_tel">Telephone</label><br>
+        <input 
+            type="tel" 
+            id="reg_tel" 
+            name="tel" 
+            pattern="\+251[0-9]{9}" 
+            placeholder="+2519XXXXXXXX (10 digits including country code)" 
+            title="Format: +251 followed by 9 digits (e.g. +251912345678)" 
+            required
+        ><br>
+
+        <label for="reg_branch">Branch</label><br>
+        <select id="reg_branch" name="branch" required>
+            <option value="">Select a branch</option>
+            <option value="bole">Bole</option>
+            <option value="kazanchis">Kazanchis</option>
+            <option value="piassa">Piassa</option>
+        </select><br><br>
+
+        <input type="submit" value="Register">
+    </form>
+<!--
+Question 2. Mark up a five-row Ethiopian Airlines flight table with a caption, column scope headers (Flight,
+From, To, Departs, Price ETB) and proper thead/tbody.
+-->
+    <h1>Exercise 2: Ethiopian Airlines Flight Schedule</h1>
+
+    <table>
+        <caption>Ethiopian Airlines · Flight Schedule (prices in ETB)</caption>
+        <thead>
+            <tr>
+                <th scope="col">Flight</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Departs</th>
+                <th scope="col">Price (ETB)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ET 123</td>
+                <td>Addis Ababa (ADD)</td>
+                <td>Nairobi (NBO)</td>
+                <td>08:30</td>
+                <td>8,500</td>
+            </tr>
+            <tr>
+                <td>ET 456</td>
+                <td>Addis Ababa (ADD)</td>
+                <td>Dubai (DXB)</td>
+                <td>11:45</td>
+                <td>18,200</td>
+            </tr>
+            <tr>
+                <td>ET 789</td>
+                <td>Addis Ababa (ADD)</td>
+                <td>London (LHR)</td>
+                <td>14:20</td>
+                <td>42,500</td>
+            </tr>
+            <tr>
+                <td>ET 321</td>
+                <td>Addis Ababa (ADD)</td>
+                <td>Johannesburg (JNB)</td>
+                <td>09:00</td>
+                <td>12,750</td>
+            </tr>
+            <tr>
+                <td>ET 654</td>
+                <td>Addis Ababa (ADD)</td>
+                <td>Rome (FCO)</td>
+                <td>16:10</td>
+                <td>38,900</td>
+            </tr>
+        </tbody>
+    </table>
+
+<!--
+Question 3. Add a media block: one dish or landmark image with meaningful alt text inside a figure with a
+figcaption, plus a map iframe with a title.
+-->
+    <h1>Exercise 3: Media Block</h1>
+
+    <figure>
+        <img 
+            src="./assets/images.jpg" 
+            alt="A traditional Ethiopian injera bread served with colorful stews including Doro Wat, Tibs, and vegetarian dishes" 
+            loading="lazy"
+            width="600"
+        >
+        <figcaption>A traditional Ethiopian feast with injera and a variety of wat (stews).</figcaption>
+    </figure>
+
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d797.7402224849372!2d38.800804893749216!3d9.014070714234187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85adc546d319%3A0xd603db2fc13ef29b!2sgreat%20college!5e0!3m2!1sen!2set!4v1785511034875!5m2!1sen!2set" 
+        width="600" 
+        height="280" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="strict-origin-when-cross-origin"
+        title="Google Map showing Great College in Bole, Addis Ababa, Ethiopia"
+    ></iframe>
+<!--
+Question 4. Take an inaccessible snippet — a div used as a button, an unlabelled input, an image with no
+alt — and rewrite all three correctly. Note in a comment what each fix gives a screen-reader or
+keyboard user.
+-->
+    <h1>Exercise 4: Inaccessible Snippet - Rewritten</h1>
+
+    <h2>Original (inaccessible) snippet:</h2>
+    <pre>
+    &lt;div onclick="submitForm()"&gt;Submit&lt;/div&gt;
+    &lt;input placeholder="Enter name"&gt;
+    &lt;img src="logo.png"&gt;
+    </pre>
+
+    <h2>Rewritten (accessible) version:</h2>
+
+    <button type="button" onclick="alert('Form submitted!')">Submit</button>
+
+    <label for="user_name">Full name</label>
+    <input type="text" id="user_name" placeholder="Enter your name" required>
+
+    <img 
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ethiopian_Airlines_Logo.svg/200px-Ethiopian_Airlines_Logo.svg.png" 
+        alt="Ethiopian Airlines logo with the iconic Ethiopian colors and font"
+        loading="lazy"
+        width="200"
+    >
+</body>
+</html>
