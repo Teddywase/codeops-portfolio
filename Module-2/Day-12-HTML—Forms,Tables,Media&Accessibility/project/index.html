@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habesha Eatery · Reserve Your Table</title>
+    <meta name="description" content="Book your table at Habesha Eatery — authentic Ethiopian cuisine. Reserve online with name, phone, guests and date. View our menu and find us on the map.">
+</head>
+<body>
+    <header>
+    <h1>Habesha Eatery</h1>
+    <nav>
+        <a href="index.html">Reservations</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    </header>
+
+    <h2>Reserve your table</h2>
+
+    <img 
+        src="./assets/image.jpg" 
+        alt="Habesha Eatery restaurant interior with traditional Ethiopian decor, mesob baskets, and warm lighting" 
+        loading="lazy"><br><br>
+
+    <fieldset>
+        <legend>Book your table</legend>
+        <form>
+            <label for="fullname">Full name</label><br>
+            <input type="text" id="fullname" name="name" placeholder="Enter your full name" required><br>
+
+            <label for="phone">Telephone</label><br>
+            <input 
+                type="tel" 
+                id="phone" 
+                name="tel" 
+                pattern="09[0-9]{8}" 
+                placeholder="09xxxxxxxx (10 digits)" 
+                title="Format: 09xxxxxxxx – exactly 10 digits starting with 09" 
+                required
+            ><br>
+
+            <label for="guests">Guests</label><br>
+            <input 
+                type="number" 
+                id="guests" 
+                name="guests" 
+                min="1" 
+                max="20" 
+                value="2" 
+                required
+            ><br>
+
+            <label for="resdate">Date</label><br>
+            <input type="date" id="resdate" name="date" required><br><br>
+
+            <input type="submit" value="Check availability">
+        </form>
+    </fieldset><br>
+
+    <table>
+        <caption>🇪🇹 Our menu · prices in ETB</caption>
+        <thead>
+            <tr>
+                <th scope="col">Dish</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price (ETB)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Doro Wat</td>
+                <td>Spicy chicken stew with boiled eggs, served with injera</td>
+                <td>550</td>
+            </tr>
+            <tr>
+                <td>Tibs</td>
+                <td>Sautéed beef or lamb with onions, peppers, and rosemary</td>
+                <td>590</td>
+            </tr>
+            <tr>
+                <td>Vegetarian Combo</td>
+                <td>Misir Wat, Gomen, Alicha, and Atakilt Wat with injera</td>
+                <td>450</td>
+            </tr>
+        </tbody>
+    </table><br>
+
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d797.7402224849372!2d38.800804893749216!3d9.014070714234187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85adc546d319%3A0xd603db2fc13ef29b!2sgreat%20college!5e0!3m2!1sen!2set!4v1785511034875!5m2!1sen!2set" 
+        width="1000" 
+        height="280" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="strict-origin-when-cross-origin"
+        title="Google Map showing Habesha Eatery restaurant location"
+    ></iframe>
+</body>
+</html>
