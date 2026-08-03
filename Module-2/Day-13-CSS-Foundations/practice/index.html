@@ -1,0 +1,206 @@
+<!--
+Exercises
+Question 1. Write a :root block with at least four custom properties — two colors, one spacing value, one
+font stack — then build a styled button that uses all four via var().
+-->
+<style>
+    :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #3498db;
+        --spacing-md: 16px;
+        --font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .styled-button {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+        padding: var(--spacing-md);
+        border: 2px solid var(--primary-color);
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .styled-button:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+</style>
+
+<button class="styled-button">Click Me</button>
+
+<!--
+Question 2. Take a 300px-wide card with 24px padding and a 2px border. Show its rendered width with
+content-box, then fix it to exactly 300px with border-box.
+-->
+<style>
+    .card-content {
+        width: 300px;
+        padding: 24px;
+        border: 2px solid #333;
+        background: #f0f0f0;
+        margin-bottom: 20px;
+    }
+
+    .card-border {
+        width: 300px;
+        padding: 24px;
+        border: 2px solid #333;
+        background: #f0f0f0;
+        box-sizing: border-box;
+    }
+</style>
+
+<div class="card-content">
+    <strong>content-box:</strong> Rendered width = 300px + 48px (padding) + 4px (border) = <strong>352px</strong>
+</div>
+
+<div class="card-border">
+    <strong>border-box:</strong> Rendered width = exactly <strong>300px</strong> (padding and border included)
+</div>
+<!--
+Question 3. Given a paragraph that is targeted by an element, a class and an ID rule all setting color,
+predict which wins and explain the specificity score for each.
+-->
+<style>
+    /* Element selector - specificity: 0,0,1 */
+    p {
+        color: blue;
+    }
+
+    /* Class selector - specificity: 0,1,0 */
+    .highlight {
+        color: green;
+    }
+
+    /* ID selector - specificity: 1,0,0 */
+    #special {
+        color: red;
+    }
+</style>
+
+<p id="special" class="highlight">What color am I?</p>
+<!--
+Question 4. Style a five-row table for an Ethiopian Airlines schedule: zebra rows with tr:nth-child(even), a
+styled header row, and comfortable cell padding.
+-->
+<style>
+    .schedule-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+    .schedule-table thead {
+        background: #0c2340;
+        /* Ethiopian Airlines blue */
+        color: white;
+    }
+
+    .schedule-table th {
+        padding: 16px 12px;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .schedule-table td {
+        padding: 14px 12px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    /* Zebra striping */
+    .schedule-table tbody tr:nth-child(even) {
+        background-color: #f5f7fa;
+    }
+
+    .schedule-table tbody tr:hover {
+        background-color: #e8edf5;
+    }
+</style>
+
+<table class="schedule-table">
+    <thead>
+        <tr>
+            <th>Flight #</th>
+            <th>Route</th>
+            <th>Departure</th>
+            <th>Arrival</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ET 500</td>
+            <td>Addis Ababa → Dubai</td>
+            <td>08:30</td>
+            <td>13:45</td>
+            <td>On Time</td>
+        </tr>
+        <tr>
+            <td>ET 712</td>
+            <td>Addis Ababa → London</td>
+            <td>10:15</td>
+            <td>16:20</td>
+            <td>Delayed</td>
+        </tr>
+        <tr>
+            <td>ET 302</td>
+            <td>Addis Ababa → Nairobi</td>
+            <td>12:00</td>
+            <td>14:10</td>
+            <td>On Time</td>
+        </tr>
+        <tr>
+            <td>ET 628</td>
+            <td>Addis Ababa → Johannesburg</td>
+            <td>15:30</td>
+            <td>19:45</td>
+            <td>On Time</td>
+        </tr>
+        <tr>
+            <td>ET 408</td>
+            <td>Addis Ababa → Cairo</td>
+            <td>18:20</td>
+            <td>20:35</td>
+            <td>Cancelled</td>
+        </tr>
+    </tbody>
+</table>
+<!--
+Question 5. Convert a three-color hex palette into both rgb() and hsl(). For the hsl version, produce a lighter
+hover shade of each by changing only the lightness.
+-->
+<style>
+:root {
+/* Original hex colors */
+--color-primary: #2c6e49;
+--color-secondary: #d4a373;
+--color-accent: #4a7c59;
+
+/* RGB versions */
+--color-primary-rgb: 44, 110, 73;
+--color-secondary-rgb: 212, 163, 115;
+--color-accent-rgb: 74, 124, 89;
+
+/* HSL versions */
+--color-primary-hsl: 145, 43%, 30%;
+--color-secondary-hsl: 36, 53%, 64%;
+--color-accent-hsl: 140, 25%, 39%;
+
+/* Lighter hover shades (increase lightness by 15%) */
+--color-primary-hover: 145, 43%, 45%;
+--color-secondary-hover: 36, 53%, 79%;
+--color-accent-hover: 140, 25%, 54%;
+}
+
+/* Usage example */
+.button-primary {
+background: rgb(var(--color-primary-rgb));
+/* or */ background: hsl(var(--color-primary-hsl));
+}
+
+.button-primary:hover {
+background: hsl(var(--color-primary-hover));
+}
+</style>

@@ -1,0 +1,236 @@
+/* ===== Easy CSS Variables ===== */
+:root {
+    /* Colors - using simple names */
+    --green: #2d8b4e;
+    --green-light: #3ba35e;
+    --green-dark: #1f6b39;
+    --yellow: #f5c842;
+    --white: #ffffff;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-600: #6c757d;
+    --gray-800: #343a40;
+
+    /* Spacing - simple numbers */
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+
+    /* Sizes */
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Reset Everything ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== Body Style ===== */
+body {
+    font-family: "Inter", Arial, sans-serif;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ===== Main Card ===== */
+.card {
+    max-width: 420px;
+    width: 100%;
+    background: var(--white);
+    padding: var(--space-xl);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gray-200);
+}
+
+/* ===== Shop Header ===== */
+.shop-header {
+    text-align: center;
+    padding-bottom: var(--space-lg);
+    border-bottom: 3px solid var(--green);
+    margin-bottom: var(--space-lg);
+}
+
+.shop-name {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--green-dark);
+}
+
+.shop-tagline {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--green);
+    margin-top: 4px;
+}
+
+/* ===== Products List ===== */
+.products {
+    margin-bottom: var(--space-xl);
+}
+
+.product-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.product-item:last-child {
+    border-bottom: none;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--gray-800);
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green-dark);
+}
+
+/* ===== Payment Section ===== */
+.payment-section {
+    background: var(--gray-100);
+    padding: var(--space-lg);
+    border-radius: var(--radius);
+    margin-bottom: var(--space-lg);
+}
+
+.payment-section h3 {
+    color: var(--green-dark);
+    font-size: 18px;
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+/* Telebirr Number Display */
+.telebirr-number {
+    background: var(--white);
+    padding: var(--space-md);
+    border-radius: var(--radius);
+    text-align: center;
+    margin-bottom: var(--space-md);
+    border: 2px dashed var(--green);
+}
+
+.telebirr-number .label {
+    display: block;
+    font-size: 13px;
+    color: var(--gray-600);
+    font-weight: 600;
+}
+
+.telebirr-number .number {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--green-dark);
+    letter-spacing: 2px;
+}
+
+/* Input Group */
+.input-group {
+    margin-bottom: var(--space-md);
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 6px;
+}
+
+.amount-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius);
+    transition: border-color 0.3s ease;
+    font-family: "Inter", sans-serif;
+}
+
+.amount-input:focus {
+    outline: none;
+    border-color: var(--green);
+}
+
+/* ===== Pay Button ===== */
+.btn-pay {
+    width: 100%;
+    padding: 14px;
+    background: var(--green);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: "Inter", sans-serif;
+}
+
+/* Hover - changes only lightness */
+/* Original: hsl(145, 58%, 36%) - This is #2d8b4e */
+/* Hover:   hsl(145, 58%, 46%) - Just lighter! */
+.btn-pay:hover {
+    background: hsl(145, 58%, 46%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45, 139, 78, 0.3);
+}
+
+.btn-pay:active {
+    transform: translateY(0);
+}
+
+.payment-note {
+    text-align: center;
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-top: var(--space-sm);
+}
+
+.note-icon {
+    display: inline-block;
+    margin-right: 4px;
+}
+
+/* ===== Shop Footer ===== */
+.shop-footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--gray-200);
+    font-size: 14px;
+    color: var(--gray-600);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+    .card {
+        padding: var(--space-lg);
+    }
+
+    .shop-name {
+        font-size: 24px;
+    }
+
+    .shop-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-sm);
+    }
+}
