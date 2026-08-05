@@ -1,0 +1,111 @@
+<!--
+Mini-project
+Requirements
+• A Grid page skeleton built with grid-template-areas: at least a header, a sidebar or filter panel, a
+main content area, and a footer.
+• Flexbox for the components inside those areas — a navbar, a toolbar, or a row of stat cards.
+• A responsive card grid somewhere, using repeat(auto-fit, minmax(...)).
+• One sticky element — a header or sidebar that stays visible while the main area scrolls.
+• At least one absolutely positioned element anchored to a relative parent (a badge, tag or close
+button).
+• A single media query that collapses the layout to one column on mobile.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Dashboard</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <div class="app">
+        <header>
+            <h2>My Dashboard</h2>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Products</a>
+                <a href="#">Contact</a>
+            </nav>
+        </header>
+
+        <aside>
+            <h3>Filters</h3>
+            <ul>
+                <li>Electronics</li>
+                <li>Fashion</li>
+                <li>Books</li>
+                <li>Sports</li>
+            </ul>
+        </aside>
+
+        <main>
+            <div class="toolbar">
+                <h2>Products</h2>
+                <button>Add Product</button>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <h3>150</h3>
+                    <p>Orders</p>
+                </div>
+
+                <div class="stat">
+                    <h3>85</h3>
+                    <p>Customers</p>
+                </div>
+
+                <div class="stat">
+                    <h3>42</h3>
+                    <p>Products</p>
+                </div>
+            </div>
+
+            <div class="cards">
+                <div class="card">
+                    <div class="badge">ETB Sale</div>
+                    <img src="./assets/headphone.jpg" alt="Product">
+                    <div class="card-content">
+                        <h3>Wireless Headphones</h3>
+                        <p>ETB 2,500</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="badge">ETB Sale</div>
+                    <img src="./assets/smart-watch.jpg" alt="Product">
+                    <div class="card-content">
+                        <h3>Smart Watch</h3>
+                        <p>ETB 3,200</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="badge">ETB Sale</div>
+                    <img src="./assets/keyboard.jpg" alt="Product">
+                    <div class="card-content">
+                        <h3>Keyboard</h3>
+                        <p>ETB 1,600</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="badge">ETB Sale</div>
+                    <img src="./assets/wireless-mouse.jpg" alt="Product">
+                    <div class="card-content">
+                        <h3>Gaming Mouse</h3>
+                        <p>ETB 1,200</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>© 2026 My Dashboard</p>
+        </footer>
+    </div>
+</body>
+</html>
