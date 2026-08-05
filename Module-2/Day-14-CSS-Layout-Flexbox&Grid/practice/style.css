@@ -1,0 +1,120 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Question 1*/
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+.logo{
+    color: black;
+    font-size: 28px;
+    font-weight: bold;
+}
+.nav-right{
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+.nav-right a{
+    text-decoration: none;
+    color: black;
+}
+.nav-right a:hover{
+    color: gold;
+}
+/* Question 2*/
+.container{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.card{
+    flex: 1;
+    min-width: 200px;
+    background: skyblue;
+    padding: 40px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+/* Question 3*/
+.gallery{
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 20px;
+    padding: 20px;}
+
+.gallery img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+/* Question 4*/
+.layout{
+
+    display:grid;
+
+    grid-template-areas:
+
+        "header header"
+
+        "sidebar main"
+
+        "footer footer";
+
+    grid-template-columns:250px 1fr;
+
+    min-height:100vh;
+}
+
+header{
+
+    grid-area: header;
+    background: #333;
+    color: white;
+    padding: 20px;
+}
+
+aside{
+
+    grid-area: sidebar;
+    background: #ddd;
+    padding: 20px;
+}
+
+main{
+
+    grid-area: main;
+    background: white;
+    padding: 20px;
+}
+
+footer{
+
+    grid-area: footer;
+    background: #333;
+    color: white;
+    padding: 20px;
+}
+@media (max-width:700px){
+
+.layout{
+grid-template-areas:
+"header"
+"sidebar"
+"main"
+"footer";
+
+grid-template-columns:1fr;
+}
+
+}
