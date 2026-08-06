@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Habesha Eatery · Addis Ababa</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">🍽️ Habesha <span>Eatery</span></div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#menu">Menu</a>
+            <a href="#reserve">Reserve</a>
+            <a href="#footer">Contact</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-inner">
+                <h1>Welcome to <span>Habesha</span> Eatery</h1>
+                <p>Authentic Ethiopian cuisine in the heart of Bole, Addis Ababa. Spices, tradition &amp; warmth.</p>
+                <a href="#reserve" class="btn">Book a Table</a>
+            </div>
+        </section>
+
+        <div class="container">
+            <section id="about" class="about">
+                <div class="about-text">
+                    <h2>Our <span>Story</span></h2>
+                    <p>Founded in 2018, Habesha Eatery brings the rich culinary heritage of Ethiopia to Bole. Every dish
+                        is prepared with time-honored recipes, locally sourced spices, and a passion for hospitality.
+                        From Doro Wat to fresh injera, we serve comfort and community.</p>
+                </div>
+                <div class="about-image">
+                    <img src="./assets/Restaurant.jpg" class="about-image">
+                </div>
+            </section>
+
+            <section id="menu" class="menu-section">
+                <h2>Our Menu</h2>
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <img src="./assets/doro-wet.jpg" class="img-placeholder">
+                        <h3>Doro Wat</h3>
+                        <p class="desc">Spicy chicken stew with berbere, served with injera.</p>
+                        <span class="price">275 ETB</span>
+                    </div>
+                    <div class="menu-card">
+                        <img src="./assets/kitfo.jpg" class="img-placeholder">
+                        <h3>Kitfo</h3>
+                        <p class="desc">Minced raw beef seasoned with mitmita &amp; butter.</p>
+                        <span class="price">320 ETB</span>
+                    </div>
+                    <div class="menu-card">
+                        <img src="./assets/shiro.jpg" class="img-placeholder">
+                        <h3>Shiro Wat</h3>
+                        <p class="desc">Ground chickpea stew, vegan, rich with spices.</p>
+                        <span class="price">195 ETB</span>
+                    </div>
+                    <div class="menu-card">
+                        <img src="./assets/asa.jpg" class="img-placeholder">
+                        <h3>Asa Tibs</h3>
+                        <p class="desc">Fried fish fillet with onions &amp; peppers.</p>
+                        <span class="price">340 ETB</span>
+                    </div>
+                    <div class="menu-card">
+                        <img src="./assets/injera.jpg" class="img-placeholder">
+                        <h3>Injera (family)</h3>
+                        <p class="desc">Large fermented teff flatbread, serves 2–3.</p>
+                        <span class="price">80 ETB</span>
+                    </div>
+                    <div class="menu-card">
+                        <img src="./assets/buna.jpg" class="img-placeholder">
+                        <h3>Buna</h3>
+                        <p class="desc">Traditional Ethiopian coffee with popcorn.</p>
+                        <span class="price">65 ETB</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="reserve" class="reservation">
+                <h2>Make a <span>Reservation</span></h2>
+                <p class="sub">We'd love to host you. Fill in the form and we'll confirm.</p>
+                <form class="form-grid" action="#" method="post">
+                    <div class="form-group">
+                        <label for="name">Full name:</label>
+                        <input type="text" id="name" placeholder="Meseret Alem" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="tel" id="phone" placeholder="+251 912 345 678" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Time:</label>
+                        <input type="time" id="time" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Guests:</label>
+                        <select id="guests" required>
+                            <option value="">Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6+">6+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="occasion">Occasion</label>
+                        <select id="occasion">
+                            <option value="">—</option>
+                            <option value="birthday">Birthday</option>
+                            <option value="anniversary">Anniversary</option>
+                            <option value="business">Business</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="note">Special requests</label>
+                        <textarea id="note" placeholder="Dietary needs, seating, etc."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Reserve Now</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4> Bole</h4>
+                <p> Bole Medhanialem, Addis Ababa</p>
+                <p> Near the Atlas Hotel</p>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <p> +251 911 234 567</p>
+                <p> hello@habeshaeatery.com</p>
+            </div>
+            <div>
+                <h4> Hours</h4>
+                <p>Mon--Sat: 11:00 - 23:00</p>
+                <p>Sunday: 12:00 - 22:00</p>
+            </div>
+            <div class="copy">
+                &copy; 2026 Habesha Eatery · Bole, Addis Ababa 
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
