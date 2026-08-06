@@ -1,0 +1,84 @@
+<!--
+In-Class Exercise
+    Steps
+    • Add the viewport meta tag if it is missing.
+    • Rewrite the menu mobile-first: one column as the base.
+    • Add a min-width: 768px query for two columns, 1024px for three.
+    • Add a transition and a translateY/scale lift on card :hover.
+    • Wrap the motion in a prefers-reduced-motion guard.
+    • Resize from 360px to 1280px and confirm it adapts smoothly.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu · Responsive & animated</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Habesha · menu</h1>
+        <div class="menu-grid">
+            <article class="dish-card">
+                <img src="./assets/doro-wet.jpg" class="img-placeholder">
+                <h3>Doro Wat</h3>
+                <p class="description">Spicy chicken stew with berbere, served with injera. A classic Ethiopian comfort dish.</p>
+                <span class="price">300 ETB</span>
+            </article>
+            <article class="dish-card">
+                <img src="./assets/kitfo.jpg" class="img-placeholder">
+                <h3>Kitfo</h3>
+                <p class="description">Minced raw beef seasoned with mitmita and clarified butter. Served with cottage cheese.</p>
+                <span class="price">350 ETB</span>
+            </article>
+
+            <article class="dish-card">
+                <img src="./assets/shiro.jpg" class="img-placeholder">
+                <h3>Shiro Wat</h3>
+                <p class="description">Ground chickpea stew with garlic, ginger and tomato. A hearty vegan favourite.</p>
+                <span class="price">195 ETB</span>
+            </article>
+
+            <article class="dish-card">
+                <img src="./assets/asa.jpg" class="img-placeholder">
+                <h3>Asa Tibs</h3>
+                <p class="description">Fried fish fillet with onions, peppers and a touch of turmeric. Light &amp; flaky.</p>
+                <span class="price">340 ETB</span>
+            </article>
+            <article class="dish-card">
+                <img src="./assets/injera.jpg" class="img-placeholder">
+                <h3>Injera (family)</h3>
+                <p class="description">Large fermented teff flatbread, the foundation of every Ethiopian meal. Serves 2–3.</p>
+                <span class="price">80 ETB</span>
+            </article>
+
+            <article class="dish-card">
+                <img src="./assets/buna.jpg" class="img-placeholder">
+                <h3>Buna</h3>
+                <p class="description">Traditional Ethiopian coffee, roasted and brewed fresh. Served with popcorn.</p>
+                <span class="price">65 ETB</span>
+            </article>
+            <article class="dish-card">
+                <img src="./assets/chicken.jpg" class="img-placeholder">
+                <h3>Chicken Tibs</h3>
+                <p class="description">Sautéed chicken with rosemary, onion, and green peppers. Mildly spiced.</p>
+                <span class="price">500 ETB</span>
+            </article>
+            <article class="dish-card">
+                <img src="./assets/kik-alcha.jpg" class="img-placeholder">
+                <h3>Kik Alicha</h3>
+                <p class="description">Split peas cooked with turmeric, ginger and garlic. A mild, golden stew.</p>
+                <span class="price">185 ETB</span>
+            </article>
+            <article class="dish-card">
+                <img src="./assets/timatim.jpg" class="img-placeholder">
+                <h3>Timatim Fitfit</h3>
+                <p class="description">Fresh tomato, onion and jalapeño salad with pieces of injera. Zesty and refreshing.</p>
+                <span class="price">150 ETB</span>
+            </article>
+        </div>
+    </div>
+</body>
+</html>
