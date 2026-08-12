@@ -1,0 +1,222 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f5f5f5;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 12px;
+}
+
+/* Form styles */
+#add-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+#add-form input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+#add-form input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+#add-form button {
+    padding: 10px 24px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+#add-form button:hover {
+    background: #2980b9;
+}
+
+#add-form button:active {
+    transform: scale(0.98);
+}
+
+/* Counter styles */
+#count {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* List styles */
+#list {
+    list-style: none;
+    padding: 0;
+}
+
+#list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #ecf0f1;
+    transition: background 0.2s;
+}
+
+#list li:hover {
+    background: #f8f9fa;
+}
+
+#list li:last-child {
+    border-bottom: none;
+}
+
+/* Item name styles */
+#list li span {
+    flex: 1;
+    font-size: 16px;
+    color: #2c3e50;
+    word-break: break-word;
+}
+
+/* Done state - strikethrough */
+#list li.done span {
+    text-decoration: line-through;
+    color: #95a5a6;
+}
+
+#list li.done {
+    opacity: 0.7;
+}
+
+/* Button styles */
+#list li button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+#list li button:active {
+    transform: scale(0.95);
+}
+
+/* Toggle button (Buy/Undo) */
+#list li button:first-of-type {
+    background: #27ae60;
+    color: white;
+}
+
+#list li button:first-of-type:hover {
+    background: #229954;
+}
+
+#list li.done button:first-of-type {
+    background: #f39c12;
+}
+
+#list li.done button:first-of-type:hover {
+    background: #d68910;
+}
+
+/* Delete button */
+#list li button:last-of-type {
+    background: #e74c3c;
+    color: white;
+}
+
+#list li button:last-of-type:hover {
+    background: #c0392b;
+}
+
+/* Empty state */
+#list:empty::after {
+    content: "Your shopping list is empty. Add some items!";
+    display: block;
+    text-align: center;
+    padding: 40px 20px;
+    color: #95a5a6;
+    font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .container {
+        padding: 16px;
+        margin-top: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    #add-form {
+        flex-direction: column;
+    }
+
+    #add-form button {
+        width: 100%;
+    }
+
+    #list li {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    #list li span {
+        width: 100%;
+        margin-bottom: 6px;
+        font-size: 15px;
+    }
+
+    #list li button {
+        padding: 5px 12px;
+        font-size: 13px;
+    }
+
+    #count {
+        font-size: 13px;
+    }
+}
