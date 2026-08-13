@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Exercises</title>
+</head>
+<body>
+
+    <h1>DOM Exercises</h1>
+
+    <h2>Exercise 1: Select H1 and change text + toggle class</h2>
+    <h1 id="ex1-heading">Original Heading</h1>
+    <button id="toggle-heading-btn">Toggle highlight class</button>
+
+    <hr>
+
+    <h2>Exercise 2: Create list items from array</h2>
+    <ul id="city-list-container"></ul>
+
+    <hr>
+
+    <h2>Exercise 3: Bubbling demonstration</h2>
+    <div id="bubble-wrapper" style="padding:20px;border:2px solid #333;">
+        <button id="bubble-btn">Click me</button>
+        <p>Check console for target vs currentTarget</p>
+    </div>
+
+    <hr>
+
+    <h2>Exercise 4: Event delegation for delete</h2>
+    <ul id="delegation-demo">
+        <li>
+            <span>Item 1</span>
+            <button class="del">Delete</button>
+        </li>
+        <li>
+            <span>Item 2</span>
+            <button class="del">Delete</button>
+        </li>
+    </ul>
+    <button id="add-demo-item">Add new item</button>
+
+    <hr>
+
+    <h2>Exercise 5: Form with preventDefault</h2>
+    <form id="exercise-form">
+        <input type="text" id="exercise-input" placeholder="Enter text">
+        <button type="submit">Add to list</button>
+    </form>
+    <ul id="exercise-list"></ul>
+
+</body>
+<script src="./script.js"></script>
+</html>
