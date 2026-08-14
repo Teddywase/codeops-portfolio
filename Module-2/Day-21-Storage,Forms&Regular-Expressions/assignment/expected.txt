@@ -1,0 +1,67 @@
+# Expected
+
+1. The signup form should contain:
+
+   * Name
+   * Email
+   * Ethiopian phone number
+   * Password
+   * Submit button
+   * Error message area
+
+2. The form should not reload the page when submitted.
+
+3. The entered values should be trimmed before validation.
+
+4. Name validation:
+
+   * Must contain at least 2 characters.
+   * Only letters and spaces are allowed.
+   * Example: "John Smith" is valid.
+   * Invalid names should show a clear error message.
+
+5. Email validation:
+
+   * Must be a valid email address.
+   * Example: "[john@gmail.com](mailto:john@gmail.com)" is valid.
+   * Invalid emails should show a clear error message.
+
+6. Phone validation:
+
+   * Must be a valid Ethiopian phone number.
+   * Accepted examples:
+
+     * 0911234567
+     * +251911234567
+   * Invalid phone numbers should show a clear error message.
+
+7. Password validation:
+
+   * Must contain at least 8 characters.
+   * Must contain at least one uppercase letter.
+   * Must contain at least one lowercase letter.
+   * Must contain at least one number.
+   * Must contain at least one special character.
+
+8. Only the first validation error should be displayed.
+
+9. When all fields are valid:
+
+   * Display a success message.
+   * Save the signup entry to localStorage.
+   * Save the data as JSON.
+   * Clear the form.
+
+10. When the page is reloaded:
+
+    * Read the saved entries from localStorage.
+    * Display how many people have signed up.
+
+11. Example successful entry:
+
+    Name: John Smith
+    Email: [john@gmail.com](mailto:john@gmail.com)
+    Phone: 0911234567
+    Password: John@123
+
+12. After submitting valid data, the signup count should increase by one.
