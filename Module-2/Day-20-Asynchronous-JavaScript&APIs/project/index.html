@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Country Facts Page</title>
+</head>
+<body>
+    <h1>Country Facts</h1>
+    <p>Enter a country name to see its facts</p>
+    
+    <div>
+        <input type="text" id="country-input" placeholder="Enter country name" value="ethiopia" />
+        <button id="search-btn">Search</button>
+    </div>
+    
+    <div id="loading" style="display: none;">Loading...</div>
+    
+    <div id="country-container">
+        <div id="country-info"></div>
+        <div id="error-message" style="display: none; color: red;"></div>
+    </div>
+    
+    <script src="./script.js"></script>
+</body>
+</html>
