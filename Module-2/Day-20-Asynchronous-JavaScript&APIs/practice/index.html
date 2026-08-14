@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Async APIs - 5 Exercises</title>
+</head>
+<body>
+
+    <h1>Async APIs — 5 Exercises</h1>
+    <p>Day 20 · Fetch, Promises, async/await &amp; error handling</p>
+
+    
+    <!-- EXERCISE 1: USD → ETB exchange rate-->
+    
+    <hr />
+    <h2>Exercise 1: USD → ETB Exchange Rate</h2>
+    <p>Fetches the latest USD to ETB rate from a public API. Checks res.ok and returns the rate.</p>
+    <button id="ex1-btn">Get Rate</button>
+    <pre id="ex1-output">Click the button to fetch the rate.</pre>
+
+    <!-- EXERCISE 2: .then chain → async/await-->
+    <hr />
+    <h2>Exercise 2: .then() Chain → async/await</h2>
+    <p>Rewrites a three-step .then() chain (fetch → json → render) as an async function with try/catch.</p>
+    <button id="ex2-btn">Run async version</button>
+    <pre id="ex2-output">Click to run the async function.</pre>
+
+    <!-- EXERCISE 3: Wrong URL + 404 handling-->
+    <hr />
+    <h2>Exercise 3: Wrong URL &amp; 404 Handling</h2>
+    <p>Fetches a deliberately wrong URL to trigger the catch block, then fetches a real URL that returns 404 to show why res.ok is essential.</p>
+    <button id="ex3-wrong">Wrong URL</button>
+    <button id="ex3-404">Real 404</button>
+    <button id="ex3-reset">Reset</button>
+    <pre id="ex3-output">Click a button to test error handling.</pre>
+
+    <!-- EXERCISE 4: Promise.all for parallel details-->
+    <hr />
+    <h2>Exercise 4: Promise.all — Parallel Details</h2>
+    <p>Fetches a list of users from a public API, then uses Promise.all to fetch details for the first two users in parallel.</p>
+    <button id="ex4-btn">Fetch &amp; parallel details</button>
+    <pre id="ex4-output">Click to fetch user details in parallel.</pre>
+
+    <!-- EXERCISE 5: Tiny page with loading / success / error states -->
+    <hr />
+    <h2>Exercise 5: Loading / Success / Error States</h2>
+    <p>Shows "Loading…", then either the fetched data (list of posts) or an error message — all three states visible.</p>
+    <button id="ex5-load">Load Posts</button>
+    <button id="ex5-error">Simulate Error</button>
+    <button id="ex5-reset">Reset</button>
+    <pre id="ex5-output">Click "Load Posts" to fetch data.</pre>
+    <ul id="ex5-list"></ul>
+
+    <script src="script.js"></script>
+</body>
+</html>
