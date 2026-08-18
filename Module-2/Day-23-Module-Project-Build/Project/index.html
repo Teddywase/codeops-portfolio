@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addis Eats · Food Ordering</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="app">
+        <!-- HEADER -->
+        <header class="app-header">
+            <h1>
+                Addis Eats
+                <span class="badge-flag">Bole</span>
+            </h1>
+            <div class="search-wrapper">
+                <input type="text" id="search" placeholder="Search dishes…" aria-label="Search menu">
+            </div>
+        </header>
+
+        <!-- MAIN GRID -->
+        <div class="main-grid">
+            <!-- MENU SECTION -->
+            <section id="menu" aria-label="Menu">
+                <div class="loading-msg">Loading menu…</div>
+            </section>
+
+            <!-- CART ASIDE -->
+            <aside id="cart" aria-label="Your order">
+                <h2>
+                    Your order
+                    <span class="cart-count" id="cartCount">0</span>
+                </h2>
+                <ul class="cart-items" id="cartItems">
+                    <li class="empty-cart">Your cart is empty</li>
+                </ul>
+                <div class="cart-total">
+                    <span>Total</span>
+                    <span class="total-amount" id="cartTotal">0 ETB</span>
+                </div>
+                <div style="margin-top: 1rem; font-size: 0.8rem; color: #4a5a6e; border-top: 1px dashed #dce2ea; padding-top: 0.7rem; display: flex; gap: 0.3rem; flex-wrap: wrap;">
+                    <span class="sample-note">✓ TeleBirr ready</span>
+                    <span class="sample-note">Cbe</span>
+                </div>
+            </aside>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <p>Bole, Addis Ababa · TeleBirr</p>
+        </footer>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
