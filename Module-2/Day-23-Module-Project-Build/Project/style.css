@@ -286,7 +286,94 @@ body {
 .cart-total .total-amount {
     color: var(--green);
 }
+/* Process payment */
+.pro{
+    margin-top: 10px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 60px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s, transform 0.1s;
+    font-family: inherit;
+}
+.pro:hover{
+    background: var(--green-dark);
+}
+.proError{
+    margin-top: 8px;
+    color: red;
+}
+.payment-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.payment-box {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    padding: 30px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.payment-box h2 {
+    margin-top: 0;
+}
+
+.payment-box label {
+    display: block;
+    margin-top: 10px;
+}
+
+.payment-box input,
+.payment-box select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+.close-btn a{
+    text-decoration: none;
+}
+.pay-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--green);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.pay-btn:hover
+{
+    background-color: #45a049;
+}
 .empty-cart {
     color: #6b7b8f;
     font-style: italic;

@@ -12,15 +12,19 @@ const searchEl = document.getElementById("search");
 const cartItemsEl = document.getElementById("cartItems");
 const cartTotalEl = document.getElementById("cartTotal");
 const cartCountEl = document.getElementById("cartCount");
+// Payment process
+const proPaymentEl = document.querySelector("#process-payment");
+const paymentPopup = document.getElementById("paymentPopup");
+const closePayment = document.getElementById("closePayment");
+const paymentTotal = document.getElementById("paymentTotal");
+const payBtn = document.getElementById("payBtn");
 
 
 async function loadMenu() {
     menuEl.innerHTML = `<div class="loading-msg">Loading menu from menu.json…</div>`;
 
     try {
-
-        const response = await fetch("menu.json");
-
+        const response = await fetch("data/menu.json");
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -55,8 +59,8 @@ function render() {
     } else {
         menuEl.innerHTML = shown
             .map((d) => `
-                            <article class="dish" data-id="${d.id}">
-                                <div class="dish-img" aria-hidden="true"></div>
+                            <article class="dish" data-id="${d.id}">                                    
+                                <img src = "${d.image}" alt = "${d.name}" class="dish-img" aria-hidden="true">
                                 <h3>${d.name}</h3>
                                 <p class="category">${d.category}</p>
                                 <p class="spicy ${d.spicy}">${d.spicy ? 'Spicy' : 'Not Spicy'}</p>
@@ -158,6 +162,24 @@ cartEl.addEventListener("click", (e) => {
 
     save();
     render();
+});
+
+proPaymentEl.addEventListener("click", (p) => {
+    let processError = p.target.closest("#proError");
+    const subtotal = state.cart.reduce(
+        (total, item) => total + (item.price * item.qty), 0);
+
+    if (subtotal === 0) {
+        proPaymentEl.innerHTML = `
+            <button class="pro">Process Payment</button>
+            <p class="proError">
+                Your cart is empty. Please order something.
+            </p>
+        `;
+    } else {
+        localStorage.setItem("paymentTotal", subtotal);
+        window.location.href = "payment.html";
+    }
 });
 
 

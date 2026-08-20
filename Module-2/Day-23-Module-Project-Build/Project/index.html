@@ -26,6 +26,7 @@
             <!-- MENU SECTION -->
             <section id="menu" aria-label="Menu">
                 <div class="loading-msg">Loading menu…</div>
+                <div class="img"></div>
             </section>
 
             <!-- CART ASIDE -->
@@ -41,13 +42,17 @@
                     <span>Total</span>
                     <span class="total-amount" id="cartTotal">0 ETB</span>
                 </div>
-                <div style="margin-top: 1rem; font-size: 0.8rem; color: #4a5a6e; border-top: 1px dashed #dce2ea; padding-top: 0.7rem; display: flex; gap: 0.3rem; flex-wrap: wrap;">
-                    <span class="sample-note">✓ TeleBirr ready</span>
+                <div
+                    style="margin-top: 1rem; font-size: 0.8rem; color: #4a5a6e; border-top: 1px dashed #dce2ea; padding-top: 0.7rem; display: flex; gap: 0.3rem; flex-wrap: wrap;">
+                    <span class="sample-note">TeleBirr</span>
                     <span class="sample-note">Cbe</span>
+                </div>
+                <div id="process-payment">
+                    <button class="pro">Process Payment</button>
+                    <p class="proError"></p>
                 </div>
             </aside>
         </div>
-
         <!-- FOOTER -->
         <footer class="app-footer">
             <p>Bole, Addis Ababa · TeleBirr</p>

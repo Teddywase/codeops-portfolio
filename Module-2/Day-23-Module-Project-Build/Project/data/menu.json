@@ -1,0 +1,22 @@
+[
+  { "id": 1, "name": "Doro Wat", "category": "Main", "price": 240, "spicy": true, "image":"assets/doro-wet.jpg"},
+  { "id": 2, "name": "Shiro", "category": "Vegetarian", "price": 120, "spicy": false, "image":"assets/shiro.jpg" },
+  { "id": 3, "name": "Kitfo", "category": "Main", "price": 320, "spicy": true, "image":"assets/kitfo.jpg"},
+  { "id": 4, "name": "Tibs", "category": "Main", "price": 280, "spicy": true, "image":"assets/tibs.jpg" },
+  { "id": 5, "name": "Injera Firfir", "category": "Breakfast", "price": 100, "spicy": true, "image":"assets/firfir.jpg" },
+  { "id": 6, "name": "Beyaynetu", "category": "Vegetarian", "price": 150, "spicy": false, "image":"assets/beyaynetu.jpg" },
+  { "id": 7, "name": "Misir Wat", "category": "Vegetarian", "price": 110, "spicy": true, "image":"assets/misir-wet.jpg" },
+  { "id": 8, "name": "Gomen", "category": "Vegetarian", "price": 90, "spicy": false, "image":"assets/gomen.jpg" },
+  { "id": 9, "name": "Atkilt Wot", "category": "Vegetarian", "price": 100, "spicy": false, "image":"assets/atkilt.jpg" },
+  { "id": 10, "name": "Derek Tibs", "category": "Main", "price": 310, "spicy": true, "image":"assets/derek-tibs.jpg" },
+  { "id": 11, "name": "Key Wat", "category": "Main", "price": 220, "spicy": true, "image":"assets/key-wet.jpg" },
+  { "id": 12, "name": "Alicha Wat", "category": "Main", "price": 210, "spicy": false, "image":"assets/alicha.jpg" },
+  { "id": 13, "name": "Bozena Shiro", "category": "Main", "price": 180, "spicy": true, "image":"assets/bozena.jpg" },
+  { "id": 14, "name": "Ayibe", "category": "Side", "price": 70, "spicy": false, "image":"assets/ayibe.jpg" },
+  { "id": 15, "name": "Kocho", "category": "Side", "price": 60, "spicy": false, "image":"assets/kocho.jpg" },
+  { "id": 16, "name": "Enkulal Firfir", "category": "Breakfast", "price": 110, "spicy": true, "image":"assets/enkulal.jpg" },
+  { "id": 17, "name": "Fuul", "category": "Breakfast", "price": 90, "spicy": true, "image":"assets/fuul.jpg" },
+  { "id": 18, "name": "Genfo", "category": "Breakfast", "price": 130, "spicy": true, "image":"assets/genfo.jpg" },
+  { "id": 19, "name": "Chechebsa", "category": "Breakfast", "price": 120, "spicy": true, "image":"assets/chechebsa.jpg" },
+  { "id": 20, "name": "Kik Alicha", "category": "Vegetarian", "price": 100, "spicy": false, "image":"assets/kik-alcha.jpg" }
+]
