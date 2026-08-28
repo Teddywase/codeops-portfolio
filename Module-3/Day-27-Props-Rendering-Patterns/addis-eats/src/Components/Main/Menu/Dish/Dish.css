@@ -1,0 +1,93 @@
+.dish-list
+{
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    
+}
+.dish {
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 8px;
+}
+
+
+.dish:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+}
+
+
+.dish-img {
+    width: 250px;
+    aspect-ratio: 1 / 0.85;
+    background: #f1f5f9;
+    border-radius: 8px;
+    margin-bottom: 0.65rem;
+}
+
+.dish h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1A2433;
+    margin: 0 0 0.2rem 0;
+}
+
+.dish .category {
+    font-size: 0.8rem;
+    color: #6b7b8f;
+    margin: 0 0 0.2rem 0;
+}
+
+.dish .spicy {
+    font-size: 0.85rem;
+    margin: 0 0 0.3rem 0;
+}
+
+.dish .spicy.true {
+    color: #dc2626;
+}
+
+.dish .spicy.false {
+    color: #22c55e;
+}
+
+.dish .price {
+    color: #2E8857;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0.3rem 0 0.6rem 0;
+}
+
+.dish .add {
+    background: #2E8857;
+    color: white;
+    border: none;
+    border-radius: 60px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    width: fit-content;
+    transition: background 0.2s, transform 0.1s;
+    font-family: inherit;
+}
+
+.dish .add:hover {
+    background: #1f6e44;
+    transform: scale(1.02);
+}
+
+.dish .add:active {
+    transform: scale(0.97);
+}
