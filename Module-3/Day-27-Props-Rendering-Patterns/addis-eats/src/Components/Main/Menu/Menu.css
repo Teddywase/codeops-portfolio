@@ -1,0 +1,13 @@
+.menu-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.menu-main {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.menu {
+    padding: 20px;
+}

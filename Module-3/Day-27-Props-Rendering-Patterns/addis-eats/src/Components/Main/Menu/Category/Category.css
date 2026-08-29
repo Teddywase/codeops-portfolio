@@ -1,0 +1,33 @@
+.category-list {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.category-btn {
+    background: #2E8857;
+    color: white;
+    border: none;
+    border-radius: 60px;
+    margin-top: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    width: fit-content;
+    transition: background 0.2s, transform 0.1s;
+    font-family: inherit;
+}
+
+.category-btn:hover {
+    border-color: #356fb5;
+    color: #822020;
+}
+
+.category-btn.active {
+    background-color: #356fb5;
+    color: white;
+    border-color: #ff6b6b;
+}

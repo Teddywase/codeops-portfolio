@@ -1,164 +1,132 @@
-.side {
-    margin-top: 90px;
+.sidebar {
+    width: 350px;
     background-color: #f9f9f9;
     border-left: 2px solid #e0e0e0;
-    height: auto;
-    max-height: 100vh;
+    height: 100vh;
+    position: sticky;
+    top: 0;
     overflow-y: auto;
-    padding: 20px;
-    border-radius: 12px;
 }
 
 .sidebar-content {
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
 }
 
 .sidebar-content h2 {
-    font-size: 18px;
+    font-size: 20px;
     color: #333;
-    margin: 0 0 15px 0;
+    margin-bottom: 20px;
     text-align: center;
 }
 
 .sidebar-content h3 {
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
-    margin: 0 0 15px 0;
+    margin-bottom: 15px;
+    margin-top: 0;
 }
 
 .empty-order {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 150px;
+    min-height: 200px;
 }
 
 .empty-order p {
     color: #999;
-    font-size: 12px;
-    text-align: center;
+    font-size: 14px;
 }
 
 .order-items {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    margin-bottom: 15px;
 }
 
 .order-item {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 10px;
+    padding: 12px;
     background-color: white;
-    border-radius: 6px;
-    border-left: 3px solid #2E8857;
+    border-radius: 8px;
+    border-left: 4px solid #2E8857;
 }
 
 .item-info h4 {
     margin: 0;
-    font-size: 12px;
+    font-size: 14px;
     color: #333;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
 }
 
 .item-price {
     margin: 0;
-    font-size: 11px;
+    font-size: 12px;
     color: #666;
 }
 
 .item-subtotal {
     font-weight: 600;
     color: #2E8857;
-    font-size: 11px;
-}
-
-.item-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.remove-btn {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    cursor: pointer;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.remove-btn:hover {
-    background-color: #c0392b;
-    transform: scale(1.1);
-}
-
-.remove-btn:active {
-    transform: scale(0.95);
+    font-size: 13px;
 }
 
 .order-divider {
     height: 1px;
     background-color: #e0e0e0;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .form-divider {
     height: 2px;
     background-color: #2E8857;
-    margin: 15px 0;
+    margin: 20px 0;
 }
 
 .order-total {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 10px;
+    padding: 15px 12px;
     background-color: #2E8857;
     color: white;
-    border-radius: 6px;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 12px;
 }
 
 .total-amount {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
 }
 
 .order-form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
 .form-group label {
     font-weight: 600;
     color: #333;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .form-group input {
-    padding: 8px;
+    padding: 10px;
     border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 12px;
+    border-radius: 6px;
+    font-size: 13px;
     font-family: inherit;
     transition: border-color 0.3s ease;
 }
@@ -179,53 +147,53 @@
 
 .error-message {
     color: #e74c3c;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
 }
 
 .form-error {
-    padding: 8px;
+    padding: 10px;
     background-color: #fadbd8;
-    border-left: 3px solid #e74c3c;
+    border-left: 4px solid #e74c3c;
     color: #c0392b;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
 }
 
 .success-message {
     color: #27ae60;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
 }
 
 .success-message-box {
     text-align: center;
-    padding: 20px 12px;
+    padding: 30px 15px;
     background-color: #d5f4e6;
-    border-left: 3px solid #27ae60;
-    border-radius: 6px;
+    border-left: 4px solid #27ae60;
+    border-radius: 8px;
 }
 
 .success-message-box h3 {
     color: #27ae60;
-    margin: 0 0 8px 0;
-    font-size: 14px;
+    margin-bottom: 10px;
+    font-size: 16px;
 }
 
 .success-message-box p {
     color: #1e8449;
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .submit-btn {
-    padding: 8px 12px;
+    padding: 10px 15px;
     background-color: #2E8857;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 12px;
+    border-radius: 6px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -235,7 +203,7 @@
 .submit-btn:hover:not(:disabled) {
     background-color: #236d42;
     transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(46, 136, 87, 0.3);
+    box-shadow: 0 2px 8px rgba(46, 136, 87, 0.3);
 }
 
 .submit-btn:active:not(:disabled) {
@@ -246,4 +214,16 @@
     background-color: #bdc3c7;
     cursor: not-allowed;
     opacity: 0.6;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
 }
