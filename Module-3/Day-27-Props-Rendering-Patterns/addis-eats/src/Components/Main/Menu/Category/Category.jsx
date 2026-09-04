@@ -1,9 +1,8 @@
-import { menuData } from '../../../../data/menuData';
 import './Category.css'
 import React from "react";
 
-function Category({ selectedCategory, onSelectCategory }) {
-    const uniqueCategories = ['All', ...new Set(menuData.map(dish => dish.category))];
+function Category({ dishes, selectedCategory, onSelectCategory }) {
+    const uniqueCategories = ['All', ...new Set(dishes.map(dish => dish.category))];
 
     return (
         <div className="category-list">

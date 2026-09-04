@@ -1,26 +1,47 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Menu.css'
 import Dish from './Dish/Dish'
 import Category from './Category/Category'
-import { menuData } from '../../../data/menuData'
 
-function Menu({ onAddToOrder, orders }) {
-    const [selectedCategory, setSelectedCategory] = useState('All');
+function Menu({ dishes, loading, error, onAddToOrder, orders, selectedCategory, onSelectCategory }) {
+    if (loading) {
+        return (
+            <section className='menu-wrapper'>
+                <div className='menu-main'>
+                    <div className='menu'>
+                        <p>Loading Addis Eats menu...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    if (error) {
+        return (
+            <section className='menu-wrapper'>
+                <div className='menu-main'>
+                    <div className='menu'>
+                        <p className='error-message'>{error}</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section className='menu-wrapper'>
             <div className='menu-main'>
                 <div className='menu'>
-                    <Category selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
-                    <Dish 
-                        selectedCategory={selectedCategory} 
+                    <Category dishes={dishes} selectedCategory={selectedCategory} onSelectCategory={onSelectCategory} />
+                    <Dish
+                        dishes={dishes}
+                        selectedCategory={selectedCategory}
                         orders={orders}
                         onAddToOrder={onAddToOrder}
                     />
                 </div>
             </div>
         </section>
-        
     )
 }
 
