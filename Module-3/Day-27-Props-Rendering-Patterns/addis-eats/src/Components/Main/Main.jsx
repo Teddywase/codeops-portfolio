@@ -1,67 +1,63 @@
-import React, { useEffect, useState } from 'react'
-import './Main.css'
-import Menu from './Menu/Menu'
-import SideBar from './SideBar/SideBar'
-import { loadDishes } from '../../api'
+import React, { useMemo, useState } from 'react';
+import './Main.css';
+import Menu from './Menu/Menu';
+import SideBar from './SideBar/SideBar';
+import { useFetch } from '../../hooks/useFetch';
+import { menuData } from '../../data/menuData';
+import { useCart } from '../../cart/CartProvider';
+
+const normalizeDish = (dish) => {
+    if (!dish || !dish.image) return dish;
+
+    if (dish.image.startsWith('http') || dish.image.startsWith('data:') || dish.image.startsWith('/')) {
+        return dish;
+    }
+
+    return {
+        ...dish,
+        image: new URL(`../../assets/${dish.image}`, import.meta.url).href,
+    };
+};
 
 function Main() {
-    const [orders, setOrders] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('All');
-    const [dishes, setDishes] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { data: fetchedDishes = [], loading, error } = useFetch('/api/dishes');
+    const { dispatch } = useCart();
 
-    useEffect(() => {
-        const controller = new AbortController();
+    const dishes = useMemo(() => {
+        const sourceDishes = fetchedDishes.length ? fetchedDishes : menuData;
+        return sourceDishes.map(normalizeDish);
+    }, [fetchedDishes]);
 
-        async function fetchDishes() {
-            try {
-                setLoading(true);
-                setError(null);
-                const data = await loadDishes(selectedCategory, controller.signal);
-                setDishes(data);
-            } catch (err) {
-                if (err.name !== 'AbortError') {
-                    setError(err.message);
-                }
-            } finally {
-                setLoading(false);
-            }
-        }
+    const visibleDishes = useMemo(() => {
+        const filtered = selectedCategory === 'All'
+            ? dishes
+            : dishes.filter((dish) => dish.category === selectedCategory);
 
-        fetchDishes();
-        return () => controller.abort();
-    }, [selectedCategory]);
+        return [...filtered].sort((a, b) => a.price - b.price);
+    }, [dishes, selectedCategory]);
 
-    const handleAddToOrder = (dishId) => {
-        setOrders(prev => ({
-            ...prev,
-            [dishId]: (prev[dishId] || 0) + 1
-        }));
+    const handleAddToOrder = (dish) => {
+        dispatch({ type: 'add', dish });
     };
 
     const handleRemoveFromOrder = (dishId) => {
-        setOrders(prev => {
-            const newOrders = { ...prev };
-            delete newOrders[dishId];
-            return newOrders;
-        });
+        dispatch({ type: 'remove', dishId });
     };
 
     return (
         <section className='main'>
             <Menu
-                dishes={dishes}
-                loading={loading}
+                dishes={visibleDishes}
+                loading={loading && !dishes.length}
                 error={error}
                 onAddToOrder={handleAddToOrder}
-                orders={orders}
                 selectedCategory={selectedCategory}
                 onSelectCategory={setSelectedCategory}
             />
-            <SideBar orders={orders} menuData={dishes} onRemoveFromOrder={handleRemoveFromOrder} />
+            <SideBar onRemoveFromOrder={handleRemoveFromOrder} />
         </section>
-    )
+    );
 }
 
-export default Main
+export default Main;

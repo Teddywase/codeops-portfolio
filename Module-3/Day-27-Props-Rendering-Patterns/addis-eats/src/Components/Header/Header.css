@@ -1,0 +1,42 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  background: #fffaf2;
+  border-bottom: 1px solid #eadfce;
+}
+
+.topbar h1 {
+  margin: 0;
+  color: #000000;
+  font-size: 1.6rem;
+}
+
+.cart-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 0.65rem;
+  border-radius: 999px;
+  background: #2e8857;
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(46, 136, 87, 0.25);
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    padding: 0.85rem 1rem;
+  }
+
+  .topbar h1 {
+    font-size: 1.3rem;
+  }
+}

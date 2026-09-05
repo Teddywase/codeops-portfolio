@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './SideBar.css';
+import { useCart } from '../../../cart/CartProvider';
 
-function SideBar({ orders, menuData, onRemoveFromOrder }) {
+function SideBar() {
+  const { items, total, dispatch } = useCart();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -17,32 +19,17 @@ function SideBar({ orders, menuData, onRemoveFromOrder }) {
     return phoneRegex.test(phone.replace(/\s/g, ''));
   };
 
-  
-  const calculateTotal = () => {
-    return Object.entries(orders).reduce((total, [dishId, count]) => {
-      const dish = menuData.find(d => d.id === parseInt(dishId));
-      return total + (dish ? dish.price * count : 0);
-    }, 0);
-  };
-
-  const getOrderedItems = () => {
-    return Object.entries(orders)
-      .filter(([_, count]) => count > 0)
-      .map(([dishId, count]) => {
-        const dish = menuData.find(d => d.id === parseInt(dishId));
-        return {
-          id: dishId,
-          name: dish.name,
-          price: dish.price,
-          count: count,
-          subtotal: dish.price * count
-        };
-      });
-  };
+  const orderedItems = items.map((item) => ({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    count: item.quantity,
+    subtotal: item.price * item.quantity,
+  }));
 
 
   const isFormValid = () => {
-    return Object.keys(orders).length > 0 &&
+    return items.length > 0 &&
       formData.name.trim() !== '' &&
       validatePhone(formData.phone) &&
       formData.area.trim() !== '';
@@ -67,7 +54,7 @@ function SideBar({ orders, menuData, onRemoveFromOrder }) {
 
     let newErrors = {};
 
-    if (Object.keys(orders).length === 0) {
+    if (items.length === 0) {
       newErrors.orders = 'Please add items to your order';
     }
 
@@ -88,8 +75,9 @@ function SideBar({ orders, menuData, onRemoveFromOrder }) {
       return;
     }
 
-    console.log('Order submitted:', { ...formData, orders });
+    console.log('Order submitted:', { ...formData, items });
     setSubmitted(true);
+    dispatch({ type: 'clear' });
 
     setTimeout(() => {
       setFormData({ name: '', phone: '', area: '' });
@@ -97,9 +85,6 @@ function SideBar({ orders, menuData, onRemoveFromOrder }) {
       setSubmitted(false);
     }, 2000);
   };
-
-  const orderedItems = getOrderedItems();
-  const total = calculateTotal();
 
   if (submitted) {
     return (
@@ -138,7 +123,7 @@ function SideBar({ orders, menuData, onRemoveFromOrder }) {
                     </div>
                     <button
                       className="remove-btn"
-                      onClick={() => onRemoveFromOrder(item.id)}
+                      onClick={() => dispatch({ type: 'remove', dishId: item.id })}
                       title="Remove this item"
                     >
                       ✕
