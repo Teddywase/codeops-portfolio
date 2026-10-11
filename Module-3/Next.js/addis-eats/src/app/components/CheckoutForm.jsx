@@ -1,31 +1,75 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import { cancelOrder, placeOrder } from "../actions";
 import { useCart } from "../providers";
+import { orderSchema } from "../../../schema";
 import styles from "./checkout-form.module.css";
 
 export default function CheckoutForm() {
   const { items, subtotal, hasHydrated, clearCart } = useCart();
-  const [order, setOrder] = useState(null);
+  const [state, formAction, isPending] = useActionState(placeOrder, null);
+  const [cancelState, cancelFormAction, isCancelPending] = useActionState(
+    cancelOrder,
+    null,
+  );
+  const [clientErrors, setClientErrors] = useState(null);
+
+  useEffect(() => {
+    if (state?.order) {
+      clearCart();
+    }
+  }, [state, clearCart]);
 
   if (!hasHydrated) {
     return <p className={styles.status}>Loading your order…</p>;
   }
 
-  if (order) {
+  if (cancelState?.success) {
+    return (
+      <section className={styles.confirmation} aria-live="polite">
+        <p className={styles.eyebrow}>Order cancelled</p>
+        <h2>Your order was cancelled</h2>
+        <p>{cancelState.message}</p>
+        <Link className={styles.primaryButton} href="/menu">
+          Back to the menu
+        </Link>
+      </section>
+    );
+  }
+
+  if (state?.order) {
     return (
       <section className={styles.confirmation} aria-live="polite">
         <span className={styles.confirmationIcon} aria-hidden="true">
           ✓
         </span>
         <p className={styles.eyebrow}>Order received</p>
-        <h2>Thank you, {order.name}!</h2>
+        <h2>Thank you for your order!</h2>
         <p>
-          Your demo order <strong>{order.number}</strong> is ready for
-          confirmation. The order total is <strong>${order.total}</strong> and
-          payment is due on delivery.
+          Your order <strong>{state.order.id}</strong> has been received. The
+          total is{" "}
+          <strong>
+            {state.order.currency} {state.order.total}
+          </strong>
+          . Payment is due on delivery.
         </p>
+        {cancelState?.error && (
+          <p className={styles.formError} role="alert">
+            {cancelState.error}
+          </p>
+        )}
+        <form action={cancelFormAction}>
+          <input name="orderId" type="hidden" value={state.order.id} />
+          <button
+            className={styles.cancelButton}
+            disabled={isCancelPending}
+            type="submit"
+          >
+            {isCancelPending ? "Cancelling…" : "Cancel this order"}
+          </button>
+        </form>
         <Link className={styles.primaryButton} href="/menu">
           Back to the menu
         </Link>
@@ -44,54 +88,96 @@ export default function CheckoutForm() {
     );
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  const orderItems = JSON.stringify(
+    items.map(({ dish, quantity }) => ({ dishId: dish.id, quantity })),
+  );
+  const fieldErrors = clientErrors ?? state?.fieldErrors ?? {};
 
+  function validateOrder(event) {
     const formData = new FormData(event.currentTarget);
-    const name = formData.get("name");
+    let submittedItems;
 
-    if (typeof name !== "string" || name.trim() === "") {
-      const nameField = event.currentTarget.elements.namedItem("name");
-      nameField.setCustomValidity("Please enter your name.");
-      nameField.reportValidity();
+    try {
+      submittedItems = JSON.parse(formData.get("items"));
+    } catch {
+      event.preventDefault();
+      setClientErrors({ items: ["Your cart data is invalid."] });
       return;
     }
 
-    const nameField = event.currentTarget.elements.namedItem("name");
-    nameField.setCustomValidity("");
-    setOrder({
-      name: name.trim(),
-      number: `AE-${Date.now().toString(36).toUpperCase()}`,
-      total: subtotal,
+    const result = orderSchema.safeParse({
+      name: formData.get("name"),
+      phone: formData.get("phone"),
+      address: formData.get("address"),
+      notes: formData.get("notes"),
+      items: submittedItems,
     });
-    clearCart();
+
+    if (!result.success) {
+      event.preventDefault();
+      setClientErrors(result.error.flatten().fieldErrors);
+      return;
+    }
+
+    setClientErrors(null);
   }
 
   return (
     <div className={styles.layout}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form
+        action={formAction}
+        className={styles.form}
+        noValidate
+        onSubmit={validateOrder}
+      >
         <h2>Delivery details</h2>
+        <input name="items" type="hidden" value={orderItems} />
+
+        {(clientErrors || state?.error) && (
+          <p className={styles.formError} role="alert">
+            {clientErrors
+              ? "Check the highlighted fields and try again."
+              : state.error}
+          </p>
+        )}
 
         <label className={styles.field}>
           Full name
           <input
             autoComplete="name"
             name="name"
-            onChange={(event) => event.currentTarget.setCustomValidity("")}
             placeholder="Your name"
             required
+            minLength={2}
+            maxLength={80}
+            aria-invalid={Boolean(fieldErrors.name?.length)}
+            aria-describedby={fieldErrors.name?.length ? "name-error" : undefined}
           />
+          {fieldErrors.name?.length > 0 && (
+            <span className={styles.fieldError} id="name-error" role="alert">
+              {fieldErrors.name[0]}
+            </span>
+          )}
         </label>
 
         <label className={styles.field}>
           Phone number
           <input
             autoComplete="tel"
+            inputMode="tel"
             name="phone"
             placeholder="+251 9..."
+            pattern="(09[0-9]{8}|\\+2519[0-9]{8})"
             required
             type="tel"
+            aria-invalid={Boolean(fieldErrors.phone?.length)}
+            aria-describedby={fieldErrors.phone?.length ? "phone-error" : undefined}
           />
+          {fieldErrors.phone?.length > 0 && (
+            <span className={styles.fieldError} id="phone-error" role="alert">
+              {fieldErrors.phone[0]}
+            </span>
+          )}
         </label>
 
         <label className={styles.field}>
@@ -102,7 +188,16 @@ export default function CheckoutForm() {
             placeholder="Street, neighborhood, and any directions"
             required
             rows={3}
+            minLength={5}
+            maxLength={300}
+            aria-invalid={Boolean(fieldErrors.address?.length)}
+            aria-describedby={fieldErrors.address?.length ? "address-error" : undefined}
           />
+          {fieldErrors.address?.length > 0 && (
+            <span className={styles.fieldError} id="address-error" role="alert">
+              {fieldErrors.address[0]}
+            </span>
+          )}
         </label>
 
         <label className={styles.field}>
@@ -111,15 +206,29 @@ export default function CheckoutForm() {
             name="notes"
             placeholder="Anything we should know?"
             rows={2}
+            maxLength={200}
+            aria-invalid={Boolean(fieldErrors.notes?.length)}
+            aria-describedby={fieldErrors.notes?.length ? "notes-error" : undefined}
           />
+          {fieldErrors.notes?.length > 0 && (
+            <span className={styles.fieldError} id="notes-error" role="alert">
+              {fieldErrors.notes[0]}
+            </span>
+          )}
         </label>
 
-        <button className={styles.primaryButton} type="submit">
-          Place demo order · ${subtotal}
+        <button
+          className={styles.primaryButton}
+          disabled={isPending}
+          type="submit"
+        >
+          {isPending
+            ? "Placing your order…"
+            : `Place order · ETB ${subtotal}`}
         </button>
         <p className={styles.disclaimer}>
-          Demo checkout only. No payment is collected and no order is sent to a
-          restaurant.
+          This class exercise uses an in-memory demo database. No payment is
+          collected.
         </p>
       </form>
 
@@ -129,15 +238,16 @@ export default function CheckoutForm() {
           {items.map(({ dish, quantity }) => (
             <li className={styles.summaryItem} key={dish.id}>
               <span>
-                {dish.name} <span className={styles.itemQuantity}>× {quantity}</span>
+                {dish.name}{" "}
+                <span className={styles.itemQuantity}>× {quantity}</span>
               </span>
-              <span>${dish.price * quantity}</span>
+              <span>ETB {dish.price * quantity}</span>
             </li>
           ))}
         </ul>
         <div className={styles.total}>
           <span>Subtotal</span>
-          <span>${subtotal}</span>
+          <span>ETB {subtotal}</span>
         </div>
         <p className={styles.deliveryNote}>
           Delivery and any applicable taxes are calculated by the restaurant.

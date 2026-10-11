@@ -28,12 +28,18 @@
 }
 
 .eyebrow {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   color: #a54830;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+}
+
+.amharicName {
+  margin-top: 1rem;
+  color: #786960;
+  font-size: 1.15rem;
 }
 
 .title {
@@ -44,11 +50,64 @@
   line-height: 1.05;
 }
 
+.tagline {
+  margin-top: 0.75rem;
+  color: #8f3a2c;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
 .description {
   margin-top: 1rem;
   color: #6b5c55;
   font-size: 1.1rem;
   line-height: 1.75;
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+  margin-top: 1.5rem;
+}
+
+.details dt {
+  color: #786960;
+  font-size: 0.82rem;
+}
+
+.details dd {
+  margin-top: 0.25rem;
+  color: #30231f;
+  font-weight: 600;
+}
+
+.ingredients {
+  margin-top: 1.5rem;
+  border-top: 1px solid #ecdfd7;
+  padding-top: 1.25rem;
+}
+
+.ingredients h2 {
+  color: #30231f;
+  font-size: 1.1rem;
+}
+
+.ingredients ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.ingredients li {
+  border-radius: 9999px;
+  background: #f8eee8;
+  padding: 0.35rem 0.7rem;
+  color: #713d2e;
+  font-size: 0.82rem;
 }
 
 .purchase {

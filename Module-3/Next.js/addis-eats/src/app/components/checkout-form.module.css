@@ -55,8 +55,28 @@
   outline: 3px solid rgb(165 72 48 / 0.15);
 }
 
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: #b42318;
+}
+
 .field textarea {
   resize: vertical;
+}
+
+.formError,
+.fieldError {
+  color: #a1261c;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.formError {
+  margin: 0 0 1rem;
+  border: 1px solid #f2c7c2;
+  border-radius: 0.7rem;
+  background: #fff7f6;
+  padding: 0.8rem 1rem;
 }
 
 .optional {
@@ -86,6 +106,33 @@
 .primaryButton:hover {
   transform: translateY(-1px);
   background: #713024;
+}
+
+.primaryButton:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+}
+
+.cancelButton {
+  min-height: 2.75rem;
+  border: 1px solid #d9c9c0;
+  border-radius: 9999px;
+  background: #fff;
+  padding: 0.65rem 1.1rem;
+  color: #91392e;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.cancelButton:hover {
+  background: #fff7f6;
+}
+
+.cancelButton:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 .form > .primaryButton {

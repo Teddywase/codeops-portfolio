@@ -34,19 +34,10 @@
   background: #78350f;
 }
 
-.content[data-selected-category="stews"] :global([data-dish-category]:not([data-dish-category="stews"])),
-.content[data-selected-category="grills"] :global([data-dish-category]:not([data-dish-category="grills"])),
-.content[data-selected-category="raw"] :global([data-dish-category]:not([data-dish-category="raw"])),
-.content[data-selected-category="vegan"] :global([data-dish-category]:not([data-dish-category="vegan"])),
-.content[data-selected-category="drinks"] :global([data-dish-category]:not([data-dish-category="drinks"])) {
+.content[data-selected-category="traditional-stews-wat"] :global([data-dish-category]:not([data-dish-category="traditional-stews-wat"])),
+.content[data-selected-category="tibs-grills"] :global([data-dish-category]:not([data-dish-category="tibs-grills"])),
+.content[data-selected-category="raw-cured-delicacies-kitfo"] :global([data-dish-category]:not([data-dish-category="raw-cured-delicacies-kitfo"])),
+.content[data-selected-category="fasting-vegan-tsom"] :global([data-dish-category]:not([data-dish-category="fasting-vegan-tsom"])),
+.content[data-selected-category="beverages-tej"] :global([data-dish-category]:not([data-dish-category="beverages-tej"])) {
   display: none;
-}
-
-.emptyState {
-  display: none;
-  color: #475569;
-}
-
-.content[data-selected-category="drinks"] .emptyState {
-  display: block;
 }

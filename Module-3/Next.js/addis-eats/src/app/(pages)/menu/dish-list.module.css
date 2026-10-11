@@ -43,7 +43,14 @@
   font-weight: 600;
 }
 
+.amharicName {
+  margin-top: 0.25rem;
+  color: #786960;
+  font-size: 0.95rem;
+}
+
 .price {
+  flex-shrink: 0;
   border-radius: 0.25rem;
   background: #fef3c7;
   padding: 0.25rem 0.5rem;
@@ -57,6 +64,31 @@
   color: #475569;
   font-size: 0.875rem;
   line-height: 1.5rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.specialTag,
+.fastingTag {
+  border-radius: 9999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.specialTag {
+  background: #f8eee8;
+  color: #8f3a2c;
+}
+
+.fastingTag {
+  background: #edf5e9;
+  color: #42663a;
 }
 
 .card :global(button) {

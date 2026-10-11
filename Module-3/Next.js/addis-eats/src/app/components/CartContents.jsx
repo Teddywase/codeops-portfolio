@@ -37,7 +37,9 @@ export default function CartContents() {
           <div key={dish.id} className={styles.item}>
             <div className={styles.itemDetails}>
               <p className={styles.name}>{dish.name}</p>
-              <p className={styles.unitPrice}>${dish.price} each</p>
+              <p className={styles.unitPrice}>
+                {dish.currency || "ETB"} {dish.price} each
+              </p>
             </div>
             <div className={styles.controls}>
               <div className={styles.quantityControl} aria-label={`Quantity for ${dish.name}`}>
@@ -55,12 +57,15 @@ export default function CartContents() {
                   className={styles.quantityButton}
                   type="button"
                   aria-label={`Increase ${dish.name} quantity`}
+                  disabled={quantity >= 99}
                   onClick={() => setQuantity(dish.id, quantity + 1)}
                 >
                   +
                 </button>
               </div>
-              <p className={styles.price}>${dish.price * quantity}</p>
+              <p className={styles.price}>
+                {dish.currency || "ETB"} {dish.price * quantity}
+              </p>
               <button
                 className={styles.removeButton}
                 type="button"
@@ -76,7 +81,7 @@ export default function CartContents() {
       <div className={styles.total}>
         <div>
           <span>Subtotal</span>
-          <span className={styles.price}>${subtotal}</span>
+          <span className={styles.price}>ETB {subtotal}</span>
         </div>
         <p>Taxes and delivery are calculated at checkout.</p>
       </div>

@@ -9,14 +9,29 @@ export default function DishList({ dishes }) {
         <article
           key={dish.id}
           className={styles.card}
-          data-dish-category={dish.category}
+          data-dish-category={dish.categoryId}
         >
-          <Link className={styles.details} href={`/menu/${dish.id}`}>
+          <Link className={styles.details} href={`/menu/${dish.slug}`}>
             <div className={styles.cardHeader}>
-              <h2 className={styles.name}>{dish.name}</h2>
-              <span className={styles.price}>${dish.price}</span>
+              <div>
+                <h2 className={styles.name}>{dish.nameEn}</h2>
+                {dish.nameAm && (
+                  <p className={styles.amharicName}>{dish.nameAm}</p>
+                )}
+              </div>
+              <span className={styles.price}>
+                {dish.currency} {dish.price}
+              </span>
             </div>
             <p className={styles.description}>{dish.description}</p>
+            <div className={styles.tags}>
+              {dish.isSpecial && (
+                <span className={styles.specialTag}>Chef’s special</span>
+              )}
+              {dish.isFasting && (
+                <span className={styles.fastingTag}>Fasting friendly</span>
+              )}
+            </div>
           </Link>
           <AddToCartButton dish={dish} />
         </article>

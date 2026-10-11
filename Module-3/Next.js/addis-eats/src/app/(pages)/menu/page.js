@@ -1,12 +1,15 @@
 import CategoryBar from "./CategoryBar";
 import DishList from "./DishList";
-import { getDishes } from "../../../lib/menu";
+import { getDishCategories, getDishes } from "../../../lib/menu";
 import styles from "./menu.module.css";
 
 export const revalidate = 3600;
 
 export default async function MenuPage() {
-  const dishes = await getDishes();
+  const [dishes, categories] = await Promise.all([
+    getDishes(),
+    getDishCategories(),
+  ]);
 
   return (
     <main className={styles.page}>
@@ -17,7 +20,7 @@ export default async function MenuPage() {
           <p className={styles.description}>Choose a dish to see its details.</p>
         </header>
 
-        <CategoryBar>
+        <CategoryBar categories={categories}>
           <DishList dishes={dishes} />
         </CategoryBar>
       </div>
