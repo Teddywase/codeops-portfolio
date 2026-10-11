@@ -1,0 +1,36 @@
+.page {
+  min-height: 70vh;
+  background: #faf7f4;
+  padding: 3rem 1.5rem 5rem;
+}
+
+.container {
+  width: min(100%, 68rem);
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  color: #a54830;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.heading {
+  margin-top: 0.6rem;
+  color: #30231f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+
+.description {
+  margin-top: 0.65rem;
+  color: #6b5c55;
+  line-height: 1.6;
+}

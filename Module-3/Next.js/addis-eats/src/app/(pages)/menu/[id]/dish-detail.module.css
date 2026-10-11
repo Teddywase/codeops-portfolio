@@ -1,0 +1,81 @@
+.page {
+  min-height: 65vh;
+  display: grid;
+  place-items: center;
+  background: #faf7f4;
+  padding: 3rem 1.5rem;
+}
+
+.card {
+  width: min(100%, 42rem);
+  border: 1px solid #ecdfd7;
+  border-radius: 1.5rem;
+  background: #fff;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  box-shadow: 0 1.5rem 4rem rgb(72 41 28 / 0.08);
+}
+
+.backLink {
+  color: #713d2e;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.eyebrow {
+  margin-top: 2.5rem;
+  color: #a54830;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: 0.75rem;
+  color: #30231f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  line-height: 1.05;
+}
+
+.description {
+  margin-top: 1rem;
+  color: #6b5c55;
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.purchase {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  border-top: 1px solid #ecdfd7;
+  padding-top: 1.5rem;
+}
+
+.priceLabel {
+  color: #786960;
+  font-size: 0.85rem;
+}
+
+.price {
+  margin-top: 0.25rem;
+  color: #30231f;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .purchase {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
