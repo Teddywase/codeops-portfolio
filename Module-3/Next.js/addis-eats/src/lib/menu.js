@@ -92,6 +92,41 @@ export async function getDishes() {
   return readMenuData();
 }
 
+export async function getDishPage({
+  query = "",
+  category = "all",
+  page = 1,
+  pageSize = 6,
+} = {}) {
+  const dishes = await readMenuData();
+  const normalizedQuery = query.trim().toLocaleLowerCase();
+  const filteredDishes = dishes.filter((dish) => {
+    const matchesCategory =
+      category === "all" || dish.categoryId === category;
+    const searchableText = [
+      dish.nameEn,
+      dish.nameAm,
+      dish.description,
+      dish.category,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLocaleLowerCase();
+
+    return matchesCategory && searchableText.includes(normalizedQuery);
+  });
+  const totalPages = Math.ceil(filteredDishes.length / pageSize);
+  const start = (page - 1) * pageSize;
+
+  return {
+    items: filteredDishes.slice(start, start + pageSize),
+    page,
+    pageSize,
+    total: filteredDishes.length,
+    totalPages,
+  };
+}
+
 export async function getDish(idOrSlug) {
   const dishes = await readMenuData();
 

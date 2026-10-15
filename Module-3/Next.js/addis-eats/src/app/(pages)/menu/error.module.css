@@ -1,0 +1,48 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background-color: #fff1f2;
+}
+
+.card {
+  max-width: 32rem;
+  border: 1px solid #fecdd3;
+  border-radius: 1rem;
+  padding: 2rem;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.heading {
+  margin: 0;
+  color: #be123c;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.message {
+  margin: 0.75rem 0 0;
+  color: #475569;
+}
+
+.retryButton {
+  margin-top: 1.5rem;
+  border: 0;
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  background-color: #e11d48;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background-color: #f43f5e;
+}

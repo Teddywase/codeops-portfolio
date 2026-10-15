@@ -4,6 +4,10 @@ import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
 import { cancelOrder, placeOrder } from "../actions";
 import { useCart } from "../providers";
+import {
+  ORDER_TRACKING_CHANGED_EVENT,
+  ORDER_TRACKING_STORAGE_KEY,
+} from "../../lib/order-tracking";
 import { orderSchema } from "../../../schema";
 import styles from "./checkout-form.module.css";
 
@@ -19,8 +23,23 @@ export default function CheckoutForm() {
   useEffect(() => {
     if (state?.order) {
       clearCart();
+      window.localStorage.setItem(ORDER_TRACKING_STORAGE_KEY, state.order.id);
+      window.dispatchEvent(new Event(ORDER_TRACKING_CHANGED_EVENT));
     }
   }, [state, clearCart]);
+
+  useEffect(() => {
+    if (cancelState?.success && state?.order) {
+      const trackedOrderId = window.localStorage.getItem(
+        ORDER_TRACKING_STORAGE_KEY,
+      );
+
+      if (trackedOrderId === state.order.id) {
+        window.localStorage.removeItem(ORDER_TRACKING_STORAGE_KEY);
+        window.dispatchEvent(new Event(ORDER_TRACKING_CHANGED_EVENT));
+      }
+    }
+  }, [cancelState, state]);
 
   if (!hasHydrated) {
     return <p className={styles.status}>Loading your order…</p>;
@@ -55,6 +74,12 @@ export default function CheckoutForm() {
           </strong>
           . Payment is due on delivery.
         </p>
+        <Link
+          className={styles.primaryButton}
+          href={`/orders/${encodeURIComponent(state.order.id)}`}
+        >
+          Track your order
+        </Link>
         {cancelState?.error && (
           <p className={styles.formError} role="alert">
             {cancelState.error}

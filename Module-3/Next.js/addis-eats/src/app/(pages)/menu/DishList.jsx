@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import AddToCartButton from "../../components/AddToCartButton";
 import styles from "./dish-list.module.css";
@@ -33,7 +35,7 @@ export default function DishList({ dishes }) {
               )}
             </div>
           </Link>
-          <AddToCartButton dish={dish} />
+          <AddToCartButton className={styles.cartAction} dish={dish} />
         </article>
       ))}
     </div>

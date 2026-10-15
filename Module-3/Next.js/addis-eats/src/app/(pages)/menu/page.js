@@ -1,13 +1,14 @@
+import { Suspense } from "react";
 import CategoryBar from "./CategoryBar";
 import DishList from "./DishList";
-import { getDishCategories, getDishes } from "../../../lib/menu";
+import { getDishCategories, getDishPage } from "../../../lib/menu";
 import styles from "./menu.module.css";
 
 export const revalidate = 3600;
 
 export default async function MenuPage() {
-  const [dishes, categories] = await Promise.all([
-    getDishes(),
+  const [initialPage, categories] = await Promise.all([
+    getDishPage(),
     getDishCategories(),
   ]);
 
@@ -20,9 +21,9 @@ export default async function MenuPage() {
           <p className={styles.description}>Choose a dish to see its details.</p>
         </header>
 
-        <CategoryBar categories={categories}>
-          <DishList dishes={dishes} />
-        </CategoryBar>
+        <Suspense fallback={<DishList dishes={initialPage.items} />}>
+          <CategoryBar categories={categories} initialPage={initialPage} />
+        </Suspense>
       </div>
     </main>
   );

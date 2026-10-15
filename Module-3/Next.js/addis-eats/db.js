@@ -45,7 +45,9 @@ const mockDishes = [
 ];
 
 // In-memory orders store
-const mockOrders = [];
+const ordersStoreKey = Symbol.for("addis-eats.mockOrders");
+const mockOrders =
+  globalThis[ordersStoreKey] ?? (globalThis[ordersStoreKey] = []);
 
 // Mock authenticated user session
 const mockSessionUser = {

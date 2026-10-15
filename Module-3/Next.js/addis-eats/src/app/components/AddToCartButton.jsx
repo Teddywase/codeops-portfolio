@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useCart } from "../providers";
 import styles from "./add-to-cart-button.module.css";
 
-export default function AddToCartButton({ dish }) {
+export default function AddToCartButton({ className = "", dish }) {
   const { addItem, hasHydrated } = useCart();
   const [wasAdded, setWasAdded] = useState(false);
 
@@ -15,7 +15,7 @@ export default function AddToCartButton({ dish }) {
   }
 
   return (
-    <div className={styles.actions}>
+    <div className={`${styles.actions} ${className}`}>
       <button
         className={styles.button}
         type="button"

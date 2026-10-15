@@ -1,0 +1,35 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 0.6rem;
+  color: #52372e;
+  padding: 0.55rem 0.7rem;
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.link:hover {
+  color: #8f3a2c;
+}
+
+.link:focus-visible {
+  outline: 3px solid #a54830;
+  outline-offset: 3px;
+}
+
+.status,
+.unavailable {
+  border-radius: 9999px;
+  background: #edf5e9;
+  color: #42663a;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.18rem 0.42rem;
+  white-space: nowrap;
+}
+
+.unavailable {
+  background: #fef2f2;
+  color: #9f2d20;
+}

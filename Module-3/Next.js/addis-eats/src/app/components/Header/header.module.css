@@ -7,7 +7,7 @@
     grid-area: brand;
     line-height: 0.9;
     margin-left: 0.6rem;
-    font-size: clamp(2.2rem, 3vw, 4rem);
+    font-size: clamp(2.2rem, 3vw);
     letter-spacing: -0.06em;
     text-decoration: none;
 }
