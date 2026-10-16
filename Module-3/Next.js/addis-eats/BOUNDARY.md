@@ -8,7 +8,11 @@
 | `src/app/(pages)/menu/page.js` | Server | Fetches the first six dishes and categories; the route remains ISR with a one-hour revalidation period. |
 | `src/app/(pages)/menu/CategoryBar.jsx` | Client | Owns the category, debounced search, and page state; uses SWR to fetch filtered pages while retaining previous results. |
 | `src/app/(pages)/menu/DishList.jsx` | Client | Renders the changing SWR result set and composes interactive add-to-cart buttons. |
+| `src/app/(pages)/signin/page.js` | Server | Validates the active session, sanitizes the return destination, and renders sign-in/sign-out states. |
+| `src/proxy.js` | Server | Redirects cookie-less requests for `/checkout` and `/orders` before rendering; the page and action checks remain authoritative. |
+| `src/app/(pages)/orders/page.js` | Server | Requires a verified session and queries only the signed-in user's orders. |
 | `src/app/(pages)/orders/[id]/page.js` | Server | Checks the mock session and order ownership, then seeds the client status poll with the current status. |
+| `src/app/(pages)/kitchen/page.js` | Server | Checks the verified session's staff role before rendering the kitchen route. |
 | `src/app/components/OrderStatus.jsx` | Client | Uses SWR to poll the owner-checked status endpoint every five seconds; server data avoids an initial loading state. |
 | `src/app/components/AddToCartButton.jsx` | Client | Handles add-to-cart clicks and writes to the cart context. |
 | `src/app/components/CartContents.jsx` | Client | Reads and updates cart state; the surrounding cart page remains a Server Component. |
@@ -18,13 +22,14 @@
 | `src/app/api/dishes/[id]/route.js` | Server | Returns one dish or a consistent 404 response. |
 | `src/app/api/orders/route.js` | Server | Validates direct JSON order requests with the shared Zod schema and returns honest status codes. |
 | `src/app/api/orders/[id]/route.js` | Server | Returns only status fields after verifying the signed-in mock session owns the order. |
+| `src/lib/session.js` | Server-only | Reads, creates, and revokes the opaque session using the HTTP-only cookie and in-memory session store. |
 | `src/lib/fetcher.js` | Client | Parses JSON responses and throws on non-success status codes for SWR. |
 | `schema.js` | Shared | Defines and validates the order payload on both the client and server. |
 | `db.js` | Server-only in this exercise | Supplies the mock dishes, orders, and session. |
 | `src/app/(pages)/menu/error.js` | Client | Next.js requires route error boundaries to be Client Components. |
 | `src/app/(pages)/menu/loading.js` | Server | Supplies the route-level loading fallback while async server rendering is pending. |
 
-Menu and API data use the same in-memory mock database in `db.js`; the order array is shared across server bundles and resets when the server process restarts. The mock session is for this exercise only and is not real authentication. Order cancellation and status reads verify the session and order owner. Cart items are persisted in browser `localStorage`; checkout creates a demo order but does not collect payment. The browser uses the server action for checkout; `POST /api/orders` remains available to external clients and validates independently. Menu route loading and unexpected errors are handled by route-level `loading.js` and `error.js`; SWR retains existing results during client searches and page changes.
+Menu data, demo users, orders, and database-style sessions use in-memory stores; orders and sessions are shared across server bundles and reset when the server process restarts. Passwords use scrypt verifiers, and the session token is held in an HTTP-only cookie, but this remains exercise-only authentication and is not suitable for deployment. The `/orders` query is scoped to the verified session user; order cancellation and status reads also verify the session and owner. Cart items are persisted in browser `localStorage`; checkout creates a demo order but does not collect payment. The browser uses the server action for checkout; `POST /api/orders` remains available to external clients and validates independently. Menu route loading and unexpected errors are handled by route-level `loading.js` and `error.js`; SWR retains existing results during client searches and page changes.
 
 ## `/menu` First Load JavaScript
 

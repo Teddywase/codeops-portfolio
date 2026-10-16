@@ -1,7 +1,8 @@
 import "server-only";
 
-import { createOrder, getSession } from "../../db";
+import { createOrder } from "../../db";
 import { getDish } from "./menu";
+import { getSession } from "./session";
 
 export class OrderRequestError extends Error {
   constructor(message, fieldErrors = {}) {

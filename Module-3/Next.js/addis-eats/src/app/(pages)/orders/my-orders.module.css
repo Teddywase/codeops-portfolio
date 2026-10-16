@@ -1,0 +1,89 @@
+.page {
+  min-height: 60vh;
+  padding: 3rem 1.5rem;
+  background: #f8fafc;
+}
+
+.card {
+  max-width: 48rem;
+  margin: 0 auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: #fff;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  box-shadow: 0 8px 24px rgb(15 23 42 / 0.06);
+}
+
+.eyebrow {
+  color: #b45309;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.heading {
+  margin: 0.5rem 0 1.5rem;
+  color: #0f172a;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+}
+
+.description {
+  color: #475569;
+}
+
+.link {
+  display: inline-flex;
+  margin-top: 1rem;
+  color: #8f3a2c;
+  font-weight: 600;
+}
+
+.list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.order {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+}
+
+.orderLink {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding: 1rem;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.orderLink:hover {
+  background: #f8fafc;
+}
+
+.orderLink:focus-visible {
+  outline: 3px solid #a54830;
+  outline-offset: 3px;
+}
+
+.date {
+  display: block;
+  margin-top: 0.25rem;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  color: #7a2d1f;
+  font-size: 0.875rem;
+  font-weight: 700;
+}

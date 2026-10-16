@@ -1,7 +1,17 @@
+import { redirect } from "next/navigation";
 import CheckoutForm from "../../components/CheckoutForm";
+import { getSession } from "../../../lib/session";
 import styles from "./checkout.module.css";
 
-export default function CheckoutPage() {
+export const dynamic = "force-dynamic";
+
+export default async function CheckoutPage() {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/signin?next=%2Fcheckout");
+  }
+
   return (
     <main className={styles.page}>
       <div className={styles.container}>

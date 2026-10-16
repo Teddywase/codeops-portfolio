@@ -1,4 +1,5 @@
-import { getOrder, getSession } from "../../../../../db";
+import { getOrder } from "../../../../../db";
+import { getSession } from "../../../../lib/session";
 
 export const dynamic = "force-dynamic";
 

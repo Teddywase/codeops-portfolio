@@ -1,6 +1,5 @@
 import Link from "next/link";
 import CartLink from "../CartLink";
-import OrderStatusLink from "../OrderStatusLink";
 import styles from "./header.module.css";
 
 const Header = () => {
@@ -11,12 +10,11 @@ const Header = () => {
             <nav className={styles.navlinks} aria-label="Main navigation">
                 <Link href="/menu">Menu</Link>
                 <CartLink />
-                <OrderStatusLink />
+                <Link href="/orders">My orders</Link>
                 <Link href="/checkout">Checkout</Link>
             </nav>
             <div className={styles.authActions}>
-                <Link href="/login" className={styles["auth-button"]}>Login</Link>
-                <Link href="/register" className={styles["auth-button"]}>Register</Link>
+                <Link href="/signin" className={styles["auth-button"]}>Sign in</Link>
             </div>
         </header>
     )

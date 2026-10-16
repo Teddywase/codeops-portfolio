@@ -3,10 +3,10 @@
 import { revalidatePath } from "next/cache";
 import {
   getOrder,
-  getSession,
   markCancelled,
 } from "../../db";
 import { orderSchema } from "../../schema";
+import { getSession } from "../lib/session";
 import {
   createCustomerOrder,
   OrderRequestError,
@@ -58,6 +58,7 @@ export async function placeOrder(_previousState, formData) {
     revalidatePath("/menu");
     revalidatePath("/cart");
     revalidatePath("/checkout");
+    revalidatePath("/orders");
 
     return { order };
   } catch (error) {
@@ -100,6 +101,7 @@ export async function cancelOrder(_previousState, formData) {
     await markCancelled(orderId);
     revalidatePath("/cart");
     revalidatePath("/checkout");
+    revalidatePath("/orders");
     return { success: true, message: "Your order was cancelled." };
   } catch (error) {
     console.error("Could not cancel the order.", error);
