@@ -22,12 +22,32 @@
 }
 
 .details {
+  display: block;
   color: inherit;
   text-decoration: none;
 }
 
+.imageFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 0.65rem;
+  background: #f1f5f9;
+  margin-bottom: 1rem;
+}
+
+.dishImage {
+  object-fit: cover;
+  transition: transform 150ms ease;
+}
+
 .details:hover .name {
   color: #8f3a2c;
+}
+
+.details:hover .dishImage {
+  transform: scale(1.03);
 }
 
 .cardHeader {

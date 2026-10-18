@@ -76,6 +76,11 @@ export default async function SignInPage({ searchParams }) {
           </button>
         </form>
         <p className={styles.description}>
+          New to Addis Eats?{" "}
+          <Link href={`/signup?next=${encodeURIComponent(destination)}`}>
+            Create an account
+          </Link>
+          <br />
           Demo customer: abebe@example.com · AddisEats42!
           <br />
           Demo customer: liya@example.com · LiyaEats42!

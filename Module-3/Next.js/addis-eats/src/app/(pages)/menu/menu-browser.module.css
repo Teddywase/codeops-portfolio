@@ -7,7 +7,7 @@
   font-weight: 600;
 }
 
-.searchField input {
+.searchField input:not([type="hidden"]) {
   width: 100%;
   min-height: 2.75rem;
   border: 1px solid #cbd5e1;
@@ -22,6 +22,27 @@
 .searchField input:focus-visible {
   outline: 3px solid rgb(146 64 14 / 0.25);
   border-color: #92400e;
+}
+
+.searchButton {
+  justify-self: start;
+  min-height: 2.5rem;
+  border: 1px solid #92400e;
+  border-radius: 0.5rem;
+  background: #92400e;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  padding: 0.5rem 0.85rem;
+}
+
+.searchButton:hover {
+  background: #78350f;
+}
+
+.searchButton:focus-visible {
+  outline: 3px solid rgb(146 64 14 / 0.25);
+  outline-offset: 2px;
 }
 
 .status,
@@ -43,7 +64,10 @@
   margin-top: 1.5rem;
 }
 
+.pagination a,
 .pagination button {
+  display: inline-flex;
+  align-items: center;
   min-height: 2.5rem;
   border: 1px solid #cbd5e1;
   border-radius: 0.5rem;
@@ -52,6 +76,7 @@
   cursor: pointer;
   font: inherit;
   padding: 0.5rem 0.85rem;
+  text-decoration: none;
 }
 
 .pagination button:disabled {
@@ -59,6 +84,7 @@
   cursor: not-allowed;
 }
 
+.pagination a:focus-visible,
 .pagination button:focus-visible {
   outline: 3px solid rgb(146 64 14 / 0.25);
   outline-offset: 2px;

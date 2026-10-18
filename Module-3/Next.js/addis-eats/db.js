@@ -10,80 +10,45 @@ import {
   timingSafeEqual,
 } from "node:crypto";
 
-// Mock dish records
-const mockDishes = [
-  {
-    id: "dish_1",
-    name: "Doro Wat",
-    description: "Traditional spicy chicken stew served with injera and boiled egg.",
-    price: 350,
-    currency: "ETB",
-    category: "Main",
-    available: true,
-  },
-  {
-    id: "dish_2",
-    name: "Beyaynetu",
-    description: "Assorted vegan fasting dishes served on injera.",
-    price: 220,
-    currency: "ETB",
-    category: "Vegetarian",
-    available: true,
-  },
-  {
-    id: "dish_3",
-    name: "Kitfo",
-    description: "Minced beef seasoned with mitmita and niter kibbeh.",
-    price: 400,
-    currency: "ETB",
-    category: "Main",
-    available: true,
-  },
-  {
-    id: "dish_4",
-    name: "Shiro Tegabeno",
-    description: "Rich chickpea flour stew served bubbling hot in a clay pot.",
-    price: 180,
-    currency: "ETB",
-    category: "Vegetarian",
-    available: true,
-  },
-];
+// 
 
 // In-memory orders store
 const ordersStoreKey = Symbol.for("addis-eats.mockOrders");
 const mockOrders =
   globalThis[ordersStoreKey] ?? (globalThis[ordersStoreKey] = []);
 
-const demoUsers = [
-  {
-    id: "user_addis_101",
-    name: "Abebe Bikila",
-    email: "abebe@example.com",
-    role: "customer",
-    passwordSalt: "addis-eats-customer-v1",
-    passwordHash:
-      "b2efa0a5daaef9ac20b5044f8d7cd140b5bf90b843078a4c3c4952d40c0d17d0cf615cc2c6d6e816ddbcab9dc33600d25388770037c9e5187e618698f1cc6dbf",
-  },
-  {
-    id: "user_addis_102",
-    name: "Liya Mekonnen",
-    email: "liya@example.com",
-    role: "customer",
-    passwordSalt: "addis-eats-customer-2-v1",
-    passwordHash:
-      "172785ee853047fad687245ffab7936fcb716051c848c070ee6dbdc0b8252f1f04c4223115d1d6dab76d072b0c4162c8ecb99992eb135d3dc90ff0e9c79d0d5d",
-  },
-  {
-    id: "user_addis_staff_101",
-    name: "Addis Eats Kitchen",
-    email: "kitchen@example.com",
-    role: "staff",
-    passwordSalt: "addis-eats-staff-v1",
-    passwordHash:
-      "4bb6f52154b0ad24052219d276aae79b8a5b97cc496d8317d55da72601ba1c64ae404ce381e87620ae49f5d32303d1deec77a0782b31a4424edb200348ae4f35",
-  },
-];
+const demoUsersStoreKey = Symbol.for("addis-eats.demoUsers");
+const demoUsers =
+  globalThis[demoUsersStoreKey] ??
+  (globalThis[demoUsersStoreKey] = [
+    {
+      id: "user_addis_101",
+      name: "Abebe Bikila",
+      email: "abebe@example.com",
+      role: "customer",
+      passwordSalt: "addis-eats-customer-v1",
+      passwordHash:
+        "b2efa0a5daaef9ac20b5044f8d7cd140b5bf90b843078a4c3c4952d40c0d17d0cf615cc2c6d6e816ddbcab9dc33600d25388770037c9e5187e618698f1cc6dbf",
+    },
+    {
+      id: "user_addis_102",
+      name: "Liya Mekonnen",
+      email: "liya@example.com",
+      role: "customer",
+      passwordSalt: "addis-eats-customer-2-v1",
+      passwordHash:
+        "172785ee853047fad687245ffab7936fcb716051c848c070ee6dbdc0b8252f1f04c4223115d1d6dab76d072b0c4162c8ecb99992eb135d3dc90ff0e9c79d0d5d",
+    },
+    {
+      id: "user_addis_staff_101",
+      name: "Addis Eats Kitchen",
+      email: "kitchen@example.com",
+      role: "staff",
+      passwordSalt: "addis-eats-staff-v1",
+      passwordHash:
+        "4bb6f52154b0ad24052219d276aae79b8a5b97cc496d8317d55da72601ba1c64ae404ce381e87620ae49f5d32303d1deec77a0782b31a4424edb200348ae4f35",
+    },
+  ]);
 
 const dummyPasswordSalt = "addis-eats-dummy-v1";
 const dummyPasswordHash = Buffer.from(
@@ -201,6 +166,42 @@ export async function authenticateUser(email, password) {
     return null;
   }
 
+  const { passwordHash: _passwordHash, passwordSalt: _passwordSalt, ...safeUser } =
+    user;
+  return safeUser;
+}
+
+export async function registerUser(name, email, password) {
+  if (
+    typeof name !== "string" ||
+    typeof email !== "string" ||
+    typeof password !== "string" ||
+    name.trim().length < 2 ||
+    name.trim().length > 80 ||
+    email.trim().length > 254 ||
+    password.length < 8 ||
+    password.length > 128
+  ) {
+    throw new Error("Registration details are invalid.");
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+  if (demoUsers.some((user) => user.email === normalizedEmail)) {
+    return null;
+  }
+
+  const passwordSalt = randomBytes(16).toString("hex");
+  const passwordHash = scryptSync(password, passwordSalt, 64).toString("hex");
+  const user = {
+    id: `user_${randomUUID()}`,
+    name: name.trim(),
+    email: normalizedEmail,
+    role: "customer",
+    passwordSalt,
+    passwordHash,
+  };
+
+  demoUsers.push(user);
   const { passwordHash: _passwordHash, passwordSalt: _passwordSalt, ...safeUser } =
     user;
   return safeUser;

@@ -1,17 +1,7 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import useSWR from "swr";
-import { fetcher } from "../../../lib/fetcher";
+import Link from "next/link";
 import DishList from "./DishList";
 import styles from "./category-bar.module.css";
 import browserStyles from "./menu-browser.module.css";
-
-function parsePage(value) {
-  const page = Number(value);
-  return Number.isSafeInteger(page) && page > 0 ? page : 1;
-}
 
 function menuHref(query, category, page) {
   const params = new URLSearchParams();
@@ -32,90 +22,14 @@ function menuHref(query, category, page) {
   return search ? `/menu?${search}` : "/menu";
 }
 
-export default function CategoryBar({ categories, initialPage }) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const urlQuery = searchParams.get("q") ?? "";
-  const urlCategory = searchParams.get("category") ?? "all";
-  const urlPage = parsePage(searchParams.get("page") ?? "1");
-  const [searchInput, setSearchInput] = useState(urlQuery);
-  const [query, setQuery] = useState(urlQuery);
-  const [selectedCategory, setSelectedCategory] = useState(urlCategory);
-  const [page, setPage] = useState(urlPage);
-
-  useEffect(() => {
-    function syncFromLocation() {
-      const params = new URLSearchParams(window.location.search);
-      const nextQuery = params.get("q") ?? "";
-
-      setSearchInput(nextQuery);
-      setQuery(nextQuery);
-      setSelectedCategory(params.get("category") ?? "all");
-      setPage(parsePage(params.get("page") ?? "1"));
-    }
-
-    window.addEventListener("popstate", syncFromLocation);
-    return () => window.removeEventListener("popstate", syncFromLocation);
-  }, []);
-
-  useEffect(() => {
-    const nextQuery = searchInput.trim();
-
-    if (nextQuery === query) {
-      return undefined;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      setQuery(nextQuery);
-      setPage(1);
-      router.replace(menuHref(nextQuery, selectedCategory, 1), {
-        scroll: false,
-      });
-    }, 300);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [query, router, searchInput, selectedCategory]);
-
-  const params = new URLSearchParams();
-
-  if (query) {
-    params.set("q", query);
-  }
-
-  if (selectedCategory !== "all") {
-    params.set("category", selectedCategory);
-  }
-
-  if (page > 1) {
-    params.set("page", String(page));
-  }
-
-  const key = params.size > 0 ? `/api/dishes?${params.toString()}` : null;
-  const { data, error } = useSWR(key, fetcher, {
-    dedupingInterval: 60_000,
-    fallbackData: key === null ? initialPage : undefined,
-    keepPreviousData: true,
-    revalidateOnFocus: true,
-  });
-  const pageData = data ?? (key === null ? initialPage : null);
+export default function CategoryBar({
+  categories,
+  pageData,
+  query,
+  category,
+  page,
+}) {
   const filters = [{ id: "all", label: "All dishes" }, ...categories];
-
-  function selectCategory(categoryId) {
-    const nextQuery = searchInput.trim();
-    setQuery(nextQuery);
-    setSelectedCategory(categoryId);
-    setPage(1);
-    router.push(menuHref(nextQuery, categoryId, 1), { scroll: false });
-  }
-
-  function selectPage(nextPage) {
-    const nextQuery = searchInput.trim();
-    setQuery(nextQuery);
-    setPage(nextPage);
-    router.push(menuHref(nextQuery, selectedCategory, nextPage), {
-      scroll: false,
-    });
-  }
 
   return (
     <section className={styles.shell}>
@@ -123,73 +37,90 @@ export default function CategoryBar({ categories, initialPage }) {
         <h2 className={styles.sidebarTitle} id="menu-categories-title">
           Categories
         </h2>
-        <div className={styles.filters} role="group" aria-label="Filter dishes">
-          {filters.map((category) => (
+        <form
+          action="/menu"
+          method="get"
+          className={styles.filters}
+          aria-label="Filter dishes"
+        >
+          <input type="hidden" name="q" value={query} />
+          <input type="hidden" name="page" value="1" />
+          {filters.map((filter) => (
             <button
-              key={category.id}
-              type="button"
+              key={filter.id}
+              type="submit"
+              name="category"
+              value={filter.id}
               className={`${styles.filter} ${
-                selectedCategory === category.id ? styles.selected : ""
+                category === filter.id ? styles.selected : ""
               }`}
-              aria-pressed={selectedCategory === category.id}
-              onClick={() => selectCategory(category.id)}
+              aria-pressed={category === filter.id}
             >
-              {category.label}
+              {filter.label}
             </button>
           ))}
-        </div>
+        </form>
       </aside>
 
       <div className={styles.content}>
-        <label className={browserStyles.searchField}>
-          <span>Search dishes</span>
+        <form
+          action="/menu"
+          method="get"
+          className={browserStyles.searchField}
+          role="search"
+        >
+          <label htmlFor="menu-search">Search dishes</label>
           <input
+            id="menu-search"
             type="search"
-            value={searchInput}
-            onChange={(event) => setSearchInput(event.target.value)}
+            name="q"
+            defaultValue={query}
             placeholder="Try kitfo or tibs"
             autoComplete="off"
           />
-        </label>
+          {category !== "all" && (
+            <input type="hidden" name="category" value={category} />
+          )}
+          <input type="hidden" name="page" value="1" />
+          <button className={browserStyles.searchButton} type="submit">
+            Search
+          </button>
+        </form>
 
-        {error && (
-          <p className={browserStyles.error} role="alert">
-            {error.message || "Could not load dishes. Please try again."}
-          </p>
+        <DishList dishes={pageData.items} />
+        {pageData.items.length === 0 && (
+          <p className={browserStyles.empty}>No dishes match your search.</p>
         )}
-
-        {pageData ? (
-          <>
-            <DishList dishes={pageData.items} />
-            {pageData.items.length === 0 && (
-              <p className={browserStyles.empty}>No dishes match your search.</p>
+        {pageData.totalPages > 1 && (
+          <nav className={browserStyles.pagination} aria-label="Menu pages">
+            {page <= 1 ? (
+              <button type="button" disabled>
+                Previous
+              </button>
+            ) : (
+              <Link
+                href={menuHref(query, category, page - 1)}
+                prefetch={false}
+              >
+                Previous
+              </Link>
             )}
-            {pageData.totalPages > 1 && (
-              <nav className={browserStyles.pagination} aria-label="Menu pages">
-                <button
-                  type="button"
-                  onClick={() => selectPage(page - 1)}
-                  disabled={page <= 1}
-                >
-                  Previous
-                </button>
-                <span aria-current="page">
-                  Page {page} of {pageData.totalPages}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => selectPage(page + 1)}
-                  disabled={page >= pageData.totalPages}
-                >
-                  Next
-                </button>
-              </nav>
+            <span aria-current="page">
+              Page {page} of {pageData.totalPages}
+            </span>
+            {page >= pageData.totalPages ? (
+              <button type="button" disabled>
+                Next
+              </button>
+            ) : (
+              <Link
+                href={menuHref(query, category, page + 1)}
+                prefetch={false}
+              >
+                Next
+              </Link>
             )}
-          </>
-        ) : (
-          <p className={browserStyles.status} role="status">
-            Loading dishes…
-          </p>
+          </nav>
         )}
       </div>
     </section>

@@ -21,6 +21,10 @@
   gap: 0.5rem;
 }
 
+.filters input[type="hidden"] {
+  display: none;
+}
+
 .filter {
   border: 1px solid #cbd5e1;
   border-radius: 9999px;

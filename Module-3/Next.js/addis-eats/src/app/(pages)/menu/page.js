@@ -1,14 +1,22 @@
-import { Suspense } from "react";
 import CategoryBar from "./CategoryBar";
-import DishList from "./DishList";
 import { getDishCategories, getDishPage } from "../../../lib/menu";
 import styles from "./menu.module.css";
 
 export const revalidate = 3600;
 
-export default async function MenuPage() {
-  const [initialPage, categories] = await Promise.all([
-    getDishPage(),
+function parsePage(value) {
+  const page = Number(value);
+  return Number.isSafeInteger(page) && page > 0 ? page : 1;
+}
+
+export default async function MenuPage({ searchParams }) {
+  const params = await searchParams;
+  const query = typeof params.q === "string" ? params.q : "";
+  const category =
+    typeof params.category === "string" ? params.category : "all";
+  const page = parsePage(typeof params.page === "string" ? params.page : "1");
+  const [pageData, categories] = await Promise.all([
+    getDishPage({ query, category, page }),
     getDishCategories(),
   ]);
 
@@ -21,9 +29,13 @@ export default async function MenuPage() {
           <p className={styles.description}>Choose a dish to see its details.</p>
         </header>
 
-        <Suspense fallback={<DishList dishes={initialPage.items} />}>
-          <CategoryBar categories={categories} initialPage={initialPage} />
-        </Suspense>
+        <CategoryBar
+          categories={categories}
+          pageData={pageData}
+          query={query}
+          category={category}
+          page={page}
+        />
       </div>
     </main>
   );

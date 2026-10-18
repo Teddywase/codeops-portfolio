@@ -63,6 +63,12 @@ The `/kitchen` page reads the role from the verified server-side session and
 returns not-found for a customer. The check is in the page, not just the
 markup. Customer actions separately enforce owner checks where they write.
 
+The public `/signup` page creates customer accounts only. Its server action
+validates and normalizes the submitted name and email, rejects duplicate email
+addresses, hashes passwords with scrypt and an individual random salt, and
+starts an httpOnly session using the same session helper as sign-in. Submitted
+redirect destinations are validated with `getSafeRedirectPath`.
+
 ### Protected surfaces
 
 | Surface | Authentication | Authorization |
@@ -80,15 +86,18 @@ markup. Customer actions separately enforce owner checks where they write.
 
 1. Visit `/checkout` or `/orders` while signed out; Proxy should send you to
    sign-in with a `next` path.
-2. Sign in as a customer and visit `/kitchen`; the server must deny access.
-3. Sign in as staff and visit `/kitchen`; the server must allow access.
-4. Sign in to separate browser profiles as the two customers, place an order
+2. Create an account at `/signup`, verify it signs you in, and try signing up
+   again with the same email using different letter casing; the second
+   registration must be rejected.
+3. Sign in as a customer and visit `/kitchen`; the server must deny access.
+4. Sign in as staff and visit `/kitchen`; the server must allow access.
+5. Sign in to separate browser profiles as the two customers, place an order
    under each account, and verify `/orders` shows only that account's orders.
    Opening the other account's order URL or polling its status API must not
    reveal its data.
-5. Try `/signin?next=https%3A%2F%2Fevil.example`; after sign-in, the app must
+6. Try `/signin?next=https%3A%2F%2Fevil.example`; after sign-in, the app must
    stay on this site and use the safe fallback instead.
-6. Call `POST /api/orders` while signed out; it must return `401`. Calling a
+7. Call `POST /api/orders` while signed out; it must return `401`. Calling a
    server action directly must still run the action's own session check.
 
 ### Review questions
@@ -113,7 +122,8 @@ markup. Customer actions separately enforce owner checks where they write.
 - Staff: `kitchen@example.com` / `Kitchen42!`
 
 The two customer accounts let you test owner-scoped order lists and record
-access. Users, orders, and sessions are in memory; they reset when the server
-restarts and are unsuitable for deployment. The passwords are demo credentials.
-Production authentication should use a maintained library, persistent storage,
-HTTPS, rate limiting, recovery flows, and secure operational session management.
+access. New customer registrations are also stored in memory and reset when
+the server restarts. Users, orders, and sessions are unsuitable for deployment.
+The passwords are demo credentials. Production authentication should use a
+maintained library, persistent storage, HTTPS, rate limiting, recovery flows,
+and secure operational session management.

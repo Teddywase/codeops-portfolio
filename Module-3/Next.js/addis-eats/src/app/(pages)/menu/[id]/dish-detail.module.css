@@ -50,6 +50,20 @@
   line-height: 1.05;
 }
 
+.imageFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #f1f5f9;
+  margin-top: 1.5rem;
+}
+
+.dishImage {
+  object-fit: cover;
+}
+
 .tagline {
   margin-top: 0.75rem;
   color: #8f3a2c;

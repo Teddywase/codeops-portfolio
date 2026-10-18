@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import AddToCartButton from "../../../components/AddToCartButton";
 import { getDish } from "../../../../lib/menu";
@@ -21,6 +22,19 @@ export default async function DishPage({ params }) {
         <p className={styles.eyebrow}>{dish.category}</p>
         {dish.nameAm && <p className={styles.amharicName}>{dish.nameAm}</p>}
         <h1 className={styles.title}>{dish.nameEn}</h1>
+        {dish.image && (
+          <div className={styles.imageFrame}>
+            <Image
+              className={styles.dishImage}
+              src={dish.image}
+              alt={dish.nameEn}
+              fill
+              loading="eager"
+              fetchPriority="high"
+              sizes="(max-width: 768px) 100vw, 672px"
+            />
+          </div>
+        )}
         {dish.tagline && <p className={styles.tagline}>{dish.tagline}</p>}
         <p className={styles.description}>{dish.description}</p>
 
