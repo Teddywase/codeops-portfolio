@@ -4,6 +4,15 @@ import { getOrdersFor } from "../../../../db";
 import { getSession } from "../../../lib/session";
 import styles from "./my-orders.module.css";
 
+export const metadata = {
+  title: "My Orders",
+  description: "View and track your Addis Eats orders.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export const dynamic = "force-dynamic";
 
 export default async function OrdersPage() {

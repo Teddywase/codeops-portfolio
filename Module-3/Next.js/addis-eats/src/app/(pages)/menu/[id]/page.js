@@ -2,8 +2,57 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import AddToCartButton from "../../../components/AddToCartButton";
-import { getDish } from "../../../../lib/menu";
+import JsonLd from "../../../components/JsonLd";
+import { getDish, getDishes } from "../../../../lib/menu";
+import { absoluteUrl } from "../../../../lib/site-url";
 import styles from "./dish-detail.module.css";
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const dishes = await getDishes();
+
+  return dishes.flatMap((dish) => [{ id: dish.slug }, { id: dish.id }]);
+}
+
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const dish = await getDish(id);
+
+  if (!dish) {
+    return {
+      title: "Dish not found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const title = `${dish.nameEn} - Ethiopian Food`;
+  const description = dish.tagline || dish.description;
+  const canonical = `/menu/${encodeURIComponent(dish.slug)}`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      type: "article",
+      siteName: "Addis Eats",
+      title,
+      description,
+      url: canonical,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export default async function DishPage({ params }) {
   const { id } = await params;
@@ -13,8 +62,34 @@ export default async function DishPage({ params }) {
     notFound();
   }
 
+  const image = dish.image
+    ? absoluteUrl(dish.image)
+    : absoluteUrl("/assets/hero.jpg");
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: dish.nameEn,
+    description: dish.description,
+    image,
+    sku: dish.id,
+    category: dish.category,
+    brand: {
+      "@type": "Brand",
+      name: "Addis Eats",
+    },
+    offers: {
+      "@type": "Offer",
+      url: absoluteUrl(`/menu/${encodeURIComponent(dish.slug)}`),
+      price: dish.price,
+      priceCurrency: dish.currency,
+      availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+    },
+  };
+
   return (
     <main className={styles.page}>
+      <JsonLd data={jsonLd} />
       <article className={styles.card}>
         <Link className={styles.backLink} href="/menu">
           ← Back to menu

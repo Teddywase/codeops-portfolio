@@ -1,6 +1,15 @@
 import CartContents from "../../components/CartContents";
 import styles from "./cart.module.css";
 
+export const metadata = {
+  title: "Your Cart",
+  description: "Review the dishes in your Addis Eats order.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default function CartPage() {
   return (
     <main className={styles.page}>

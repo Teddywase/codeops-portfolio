@@ -2,6 +2,15 @@ import { notFound, redirect } from "next/navigation";
 import { getSession } from "../../../lib/session";
 import styles from "./kitchen.module.css";
 
+export const metadata = {
+  title: "Kitchen Dashboard",
+  description: "Addis Eats staff kitchen dashboard.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export const dynamic = "force-dynamic";
 
 export default async function KitchenPage() {

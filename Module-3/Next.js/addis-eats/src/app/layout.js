@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { Providers } from "./providers";
+import { siteUrl } from "../lib/site-url";
 
 
 const geistSans = Geist({
@@ -18,8 +19,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Addis Eats",
-  description: "Ethiopian cuisine menu and ordering app",
+  metadataBase: siteUrl,
+  title: {
+    default: "Addis Eats",
+    template: "%s | Addis Eats",
+  },
+  description:
+    "Discover Ethiopian dishes and order from the Addis Eats menu.",
+  applicationName: "Addis Eats",
+  openGraph: {
+    type: "website",
+    siteName: "Addis Eats",
+    title: "Addis Eats",
+    description:
+      "Discover Ethiopian dishes and order from the Addis Eats menu.",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Addis Eats",
+    description:
+      "Discover Ethiopian dishes and order from the Addis Eats menu.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }) {

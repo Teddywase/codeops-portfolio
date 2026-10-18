@@ -4,6 +4,15 @@ import { getSession } from "../../../lib/session";
 import { getSafeRedirectPath } from "../../../lib/safe-redirect";
 import styles from "../signin/signin.module.css";
 
+export const metadata = {
+  title: "Create an Account",
+  description: "Create an Addis Eats account to place and track your orders.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default async function SignUpPage({ searchParams }) {
   const params = await searchParams;
   const destination = getSafeRedirectPath(params?.next);

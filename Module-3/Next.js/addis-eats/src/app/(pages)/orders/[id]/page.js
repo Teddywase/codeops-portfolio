@@ -5,6 +5,15 @@ import { getSession } from "../../../../lib/session";
 import OrderStatus from "../../../components/OrderStatus";
 import styles from "../../../components/order-status.module.css";
 
+export const metadata = {
+  title: "Order Status",
+  description: "Track the status of your Addis Eats order.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export const dynamic = "force-dynamic";
 
 export default async function OrderPage({ params }) {
