@@ -9,6 +9,6 @@ export const metadata = {
 
 export default function notFound(){
     return(
-        <div>The dish you required is not found</div>
+        <div>The page you required is not found</div>
     )
 }

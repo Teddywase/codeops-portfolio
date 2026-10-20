@@ -9,6 +9,8 @@ import {
   scryptSync,
   timingSafeEqual,
 } from "node:crypto";
+import { getDish as findMenuDish, getDishes } from "./menu";
+import { ORDER_NEIGHBORHOODS } from "./schema";
 
 // 
 
@@ -22,24 +24,6 @@ const demoUsers =
   globalThis[demoUsersStoreKey] ??
   (globalThis[demoUsersStoreKey] = [
     {
-      id: "user_addis_101",
-      name: "Abebe Bikila",
-      email: "abebe@example.com",
-      role: "customer",
-      passwordSalt: "addis-eats-customer-v1",
-      passwordHash:
-        "b2efa0a5daaef9ac20b5044f8d7cd140b5bf90b843078a4c3c4952d40c0d17d0cf615cc2c6d6e816ddbcab9dc33600d25388770037c9e5187e618698f1cc6dbf",
-    },
-    {
-      id: "user_addis_102",
-      name: "Liya Mekonnen",
-      email: "liya@example.com",
-      role: "customer",
-      passwordSalt: "addis-eats-customer-2-v1",
-      passwordHash:
-        "172785ee853047fad687245ffab7936fcb716051c848c070ee6dbdc0b8252f1f04c4223115d1d6dab76d072b0c4162c8ecb99992eb135d3dc90ff0e9c79d0d5d",
-    },
-    {
       id: "user_addis_staff_101",
       name: "Addis Eats Kitchen",
       email: "kitchen@example.com",
@@ -49,6 +33,12 @@ const demoUsers =
         "4bb6f52154b0ad24052219d276aae79b8a5b97cc496d8317d55da72601ba1c64ae404ce381e87620ae49f5d32303d1deec77a0782b31a4424edb200348ae4f35",
     },
   ]);
+const retiredDemoCustomerIds = new Set(["user_addis_101", "user_addis_102"]);
+for (let index = demoUsers.length - 1; index >= 0; index -= 1) {
+  if (retiredDemoCustomerIds.has(demoUsers[index].id)) {
+    demoUsers.splice(index, 1);
+  }
+}
 
 const dummyPasswordSalt = "addis-eats-dummy-v1";
 const dummyPasswordHash = Buffer.from(
@@ -64,11 +54,8 @@ const sessions =
  */
 export const db = {
   dish: {
-    findMany: async () => mockDishes.map((dish) => ({ ...dish })),
-    findUnique: async ({ where }) =>
-      mockDishes
-        .filter((dish) => dish.id === where.id)
-        .map((dish) => ({ ...dish }))[0] || null,
+    findMany: async () => getDishes(),
+    findUnique: async ({ where }) => findMenuDish(where.id),
   },
   order: {
     findMany: async ({ where } = {}) => {
@@ -90,8 +77,7 @@ export const db = {
  * Fetch a single dish by ID
  */
 export async function getDish(id) {
-  const dish = mockDishes.find((dish) => dish.id === id);
-  return dish ? { ...dish } : null;
+  return findMenuDish(id);
 }
 
 /**
@@ -124,6 +110,110 @@ export async function getOrder(id) {
 
 export async function getOrdersFor(userId) {
   return db.order.findMany({ where: { userId } });
+}
+
+export async function getKitchenDashboardData({
+  sort = "createdAt",
+  direction = "desc",
+  page = 1,
+  pageSize = 10,
+} = {}) {
+  const allowedSorts = new Set([
+    "createdAt",
+    "name",
+    "neighborhood",
+    "status",
+    "total",
+  ]);
+  const sortKey = allowedSorts.has(sort) ? sort : "createdAt";
+  const sortDirection = direction === "asc" ? 1 : -1;
+  const safePage = Number.isSafeInteger(page) && page > 0 ? page : 1;
+  const safePageSize =
+    Number.isSafeInteger(pageSize) && pageSize > 0 ? pageSize : 10;
+  const orders = mockOrders.map((order) => ({
+    ...order,
+    items: order.items?.map((item) => ({ ...item })),
+  }));
+  const sortValue = (order) =>
+    sortKey === "createdAt"
+      ? order.createdAt
+      : sortKey === "total"
+        ? order.total
+        : order[sortKey] ?? "Unspecified";
+  const sortOrders = orders.slice().sort((left, right) => {
+    const leftValue = sortValue(left);
+    const rightValue = sortValue(right);
+    const comparison =
+      typeof leftValue === "number" && typeof rightValue === "number"
+        ? leftValue - rightValue
+        : String(leftValue).localeCompare(String(rightValue));
+
+    return comparison === 0
+      ? left.id.localeCompare(right.id) * sortDirection
+      : comparison * sortDirection;
+  });
+
+  const revenueByNeighborhood = new Map(
+    ORDER_NEIGHBORHOODS.map((neighborhood) => [neighborhood, 0]),
+  );
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  const daysByDate = new Map();
+
+  for (let offset = 6; offset >= 0; offset -= 1) {
+    const date = new Date(today);
+    date.setUTCDate(date.getUTCDate() - offset);
+    const dateKey = date.toISOString().slice(0, 10);
+    daysByDate.set(dateKey, {
+      date: dateKey,
+      label: new Intl.DateTimeFormat("en", {
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC",
+      }).format(date),
+      orders: 0,
+    });
+  }
+
+  for (const order of orders) {
+    const createdAt = new Date(order.createdAt);
+    if (!Number.isNaN(createdAt.getTime())) {
+      const day = daysByDate.get(createdAt.toISOString().slice(0, 10));
+      if (day) {
+        day.orders += 1;
+      }
+    }
+
+    if (order.status === "CANCELLED") {
+      continue;
+    }
+
+    const neighborhood = ORDER_NEIGHBORHOODS.includes(order.neighborhood)
+      ? order.neighborhood
+      : "Unspecified";
+    revenueByNeighborhood.set(
+      neighborhood,
+      (revenueByNeighborhood.get(neighborhood) ?? 0) + order.total,
+    );
+  }
+
+  const total = sortOrders.length;
+  const totalPages = Math.ceil(total / safePageSize);
+  const currentPage = Math.min(safePage, totalPages || 1);
+  const start = (currentPage - 1) * safePageSize;
+
+  return {
+    orders: sortOrders.slice(start, start + safePageSize),
+    total,
+    page: currentPage,
+    pageSize: safePageSize,
+    totalPages,
+    revenueByNeighborhood: Array.from(
+      revenueByNeighborhood,
+      ([neighborhood, value]) => ({ neighborhood, value }),
+    ),
+    ordersByDay: Array.from(daysByDate.values()),
+  };
 }
 
 /**

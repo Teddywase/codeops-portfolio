@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getOrdersFor } from "../../../../db";
+import { getOrdersFor } from "../../../lib/db";
 import { getSession } from "../../../lib/session";
 import styles from "./my-orders.module.css";
 

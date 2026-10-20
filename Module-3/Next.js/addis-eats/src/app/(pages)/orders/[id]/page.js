@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getOrder } from "../../../../../db";
+import { getOrder } from "../../../../lib/db";
 import { getSession } from "../../../../lib/session";
 import OrderStatus from "../../../components/OrderStatus";
 import styles from "../../../components/order-status.module.css";

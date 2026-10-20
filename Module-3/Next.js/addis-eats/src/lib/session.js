@@ -5,7 +5,7 @@ import {
   createSession,
   deleteSession,
   getSessionByToken,
-} from "../../db";
+} from "./db";
 import { SESSION_COOKIE_NAME, SESSION_MAX_AGE } from "./session-cookie";
 
 const cookieOptions = {

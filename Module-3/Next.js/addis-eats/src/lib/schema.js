@@ -6,6 +6,8 @@ export const signUpSchema = z.object({
   password: z.string().min(8).max(128),
 });
 
+export const ORDER_NEIGHBORHOODS = ["Bole", "Kazanchis", "Megenagna"];
+
 const orderItemSchema = z.object({
   dishId: z.string().trim().min(1, "Choose a dish."),
   quantity: z.number().int().min(1).max(99),
@@ -17,6 +19,9 @@ export const orderSchema = z.object({
     .string()
     .trim()
     .regex(/^(09\d{8}|\+2519\d{8})$/, "Use 09… or +2519… followed by 8 digits."),
+  neighborhood: z.enum(ORDER_NEIGHBORHOODS, {
+    error: "Choose a delivery neighborhood.",
+  }),
   address: z.string().trim().min(5, "Enter a complete delivery address.").max(300),
   items: z
     .array(orderItemSchema)

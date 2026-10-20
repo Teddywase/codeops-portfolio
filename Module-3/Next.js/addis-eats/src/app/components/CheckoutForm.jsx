@@ -8,7 +8,7 @@ import {
   ORDER_TRACKING_CHANGED_EVENT,
   ORDER_TRACKING_STORAGE_KEY,
 } from "../../lib/order-tracking";
-import { orderSchema } from "../../../schema";
+import { orderSchema, ORDER_NEIGHBORHOODS } from "../../lib/schema";
 import styles from "./checkout-form.module.css";
 
 export default function CheckoutForm() {
@@ -133,6 +133,7 @@ export default function CheckoutForm() {
     const result = orderSchema.safeParse({
       name: formData.get("name"),
       phone: formData.get("phone"),
+      neighborhood: formData.get("neighborhood"),
       address: formData.get("address"),
       notes: formData.get("notes"),
       items: submittedItems,
@@ -201,6 +202,31 @@ export default function CheckoutForm() {
           {fieldErrors.phone?.length > 0 && (
             <span className={styles.fieldError} id="phone-error" role="alert">
               {fieldErrors.phone[0]}
+            </span>
+          )}
+        </label>
+
+        <label className={styles.field}>
+          Neighborhood
+          <select
+            defaultValue=""
+            name="neighborhood"
+            required
+            aria-invalid={Boolean(fieldErrors.neighborhood?.length)}
+            aria-describedby={
+              fieldErrors.neighborhood?.length ? "neighborhood-error" : undefined
+            }
+          >
+            <option disabled value="">Choose your neighborhood</option>
+            {ORDER_NEIGHBORHOODS.map((neighborhood) => (
+              <option key={neighborhood} value={neighborhood}>
+                {neighborhood}
+              </option>
+            ))}
+          </select>
+          {fieldErrors.neighborhood?.length > 0 && (
+            <span className={styles.fieldError} id="neighborhood-error" role="alert">
+              {fieldErrors.neighborhood[0]}
             </span>
           )}
         </label>

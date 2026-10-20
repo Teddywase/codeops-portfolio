@@ -1,4 +1,4 @@
-import { orderSchema } from "../../../../schema";
+import { orderSchema } from "../../../lib/schema";
 import {
   createCustomerOrder,
   OrderRequestError,

@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 import {
   getOrder,
   markCancelled,
-} from "../../db";
-import { orderSchema } from "../../schema";
+} from "../lib/db";
+import { orderSchema } from "../lib/schema";
 import { getSession } from "../lib/session";
 import {
   createCustomerOrder,
@@ -41,6 +41,7 @@ export async function placeOrder(_previousState, formData) {
   const parsedOrder = orderSchema.safeParse({
     name: getFormString(formData, "name"),
     phone: getFormString(formData, "phone"),
+    neighborhood: getFormString(formData, "neighborhood"),
     address: getFormString(formData, "address"),
     notes: getFormString(formData, "notes"),
     items,
@@ -59,6 +60,7 @@ export async function placeOrder(_previousState, formData) {
     revalidatePath("/cart");
     revalidatePath("/checkout");
     revalidatePath("/orders");
+    revalidatePath("/kitchen");
 
     return { order };
   } catch (error) {
@@ -102,6 +104,7 @@ export async function cancelOrder(_previousState, formData) {
     revalidatePath("/cart");
     revalidatePath("/checkout");
     revalidatePath("/orders");
+    revalidatePath("/kitchen");
     return { success: true, message: "Your order was cancelled." };
   } catch (error) {
     console.error("Could not cancel the order.", error);

@@ -1,8 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { authenticateUser, registerUser } from "../../db";
-import { signUpSchema } from "../../schema";
+import { authenticateUser, registerUser } from "../lib/db";
+import { signUpSchema } from "../lib/schema";
 import { endSession, startSession } from "../lib/session";
 import { getSafeRedirectPath } from "../lib/safe-redirect";
 

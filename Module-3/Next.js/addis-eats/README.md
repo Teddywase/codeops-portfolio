@@ -26,3 +26,15 @@ The home page and dish pages include JSON-LD generated from the restaurant and
 menu data. Dish pages and their Open Graph images are generated from menu slugs.
 Private account, order, checkout, cart, and staff routes are excluded from
 crawling and the sitemap.
+
+## Staff dashboard
+
+Staff can sign in and open `/kitchen` to view order-value totals by delivery
+neighborhood, seven days of order activity, and a sortable, paginated order
+table. Charts are aggregated on the server; each chart also has an accessible
+data table. New orders collect a neighborhood from the supported list in
+`src/lib/schema.js`. Order values exclude cancelled orders and are not payment
+revenue; this demo does not collect payments.
+
+The dashboard is backed by the in-memory mock store, so account and order data
+is cleared when the server process restarts.

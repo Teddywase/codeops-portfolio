@@ -90,10 +90,6 @@ export default async function SignInPage({ searchParams }) {
             Create an account
           </Link>
           <br />
-          Demo customer: abebe@example.com · AddisEats42!
-          <br />
-          Demo customer: liya@example.com · LiyaEats42!
-          <br />
           Demo staff: kitchen@example.com · Kitchen42!
         </p>
       </section>

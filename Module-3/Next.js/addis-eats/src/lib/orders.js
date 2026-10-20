@@ -1,6 +1,6 @@
 import "server-only";
 
-import { createOrder } from "../../db";
+import { createOrder } from "./db";
 import { getDish } from "./menu";
 import { getSession } from "./session";
 
@@ -55,6 +55,7 @@ export async function createCustomerOrder(data) {
     {
       name: data.name,
       phone: data.phone,
+      neighborhood: data.neighborhood,
       address: data.address,
       notes: data.notes,
       items,
