@@ -277,10 +277,6 @@ export default function CheckoutForm() {
             ? "Placing your order…"
             : `Place order · ETB ${subtotal}`}
         </button>
-        <p className={styles.disclaimer}>
-          This class exercise uses an in-memory demo database. No payment is
-          collected.
-        </p>
       </form>
 
       <aside className={styles.summary}>
