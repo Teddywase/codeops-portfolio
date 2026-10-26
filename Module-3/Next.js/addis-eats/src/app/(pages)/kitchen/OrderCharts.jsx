@@ -11,7 +11,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { formatEtb } from "../../../lib/formatting";
+import { formatEtb } from "../../../lib/format";
 import styles from "./kitchen.module.css";
 
 export default function OrderCharts({ revenueByNeighborhood, ordersByDay }) {

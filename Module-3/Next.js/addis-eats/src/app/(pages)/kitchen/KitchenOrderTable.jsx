@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatDate, formatEtb } from "../../../lib/formatting";
+import { formatDate, formatEtb } from "../../../lib/format";
 import styles from "./kitchen.module.css";
 
 const columns = [

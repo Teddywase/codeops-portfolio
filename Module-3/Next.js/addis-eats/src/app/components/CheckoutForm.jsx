@@ -8,6 +8,7 @@ import {
   ORDER_TRACKING_CHANGED_EVENT,
   ORDER_TRACKING_STORAGE_KEY,
 } from "../../lib/order-tracking";
+import { formatEtb } from "../../lib/format";
 import { orderSchema, ORDER_NEIGHBORHOODS } from "../../lib/schema";
 import styles from "./checkout-form.module.css";
 
@@ -70,7 +71,7 @@ export default function CheckoutForm() {
           Your order <strong>{state.order.id}</strong> has been received. The
           total is{" "}
           <strong>
-            {state.order.currency} {state.order.total}
+            {formatEtb(state.order.total)}
           </strong>
           . Payment is due on delivery.
         </p>
@@ -275,7 +276,7 @@ export default function CheckoutForm() {
         >
           {isPending
             ? "Placing your order…"
-            : `Place order · ETB ${subtotal}`}
+            : `Place order · ${formatEtb(subtotal)}`}
         </button>
       </form>
 
@@ -288,13 +289,13 @@ export default function CheckoutForm() {
                 {dish.name}{" "}
                 <span className={styles.itemQuantity}>× {quantity}</span>
               </span>
-              <span>ETB {dish.price * quantity}</span>
+              <span>{formatEtb(dish.price * quantity)}</span>
             </li>
           ))}
         </ul>
         <div className={styles.total}>
           <span>Subtotal</span>
-          <span>ETB {subtotal}</span>
+          <span>{formatEtb(subtotal)}</span>
         </div>
         <p className={styles.deliveryNote}>
           Delivery and any applicable taxes are calculated by the restaurant.

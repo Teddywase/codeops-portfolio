@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { getKitchenDashboardData } from "../../../lib/db";
-import { formatEtb } from "../../../lib/formatting";
+import { formatEtb } from "../../../lib/format";
 import { getSession } from "../../../lib/session";
 import KitchenOrderTable from "./KitchenOrderTable";
 import OrderCharts from "./OrderCharts";

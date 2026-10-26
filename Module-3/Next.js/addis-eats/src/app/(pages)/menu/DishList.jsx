@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import AddToCartButton from "../../components/AddToCartButton";
+import { formatEtb } from "../../../lib/format";
 import styles from "./dish-list.module.css";
 
 export default function DishList({ dishes }) {
@@ -34,7 +35,7 @@ export default function DishList({ dishes }) {
                 )}
               </div>
               <span className={styles.price}>
-                {dish.currency} {dish.price}
+                {formatEtb(dish.price)}
               </span>
             </div>
             <p className={styles.description}>{dish.description}</p>

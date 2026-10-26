@@ -38,3 +38,11 @@ revenue; this demo does not collect payments.
 
 The dashboard is backed by the in-memory mock store, so account and order data
 is cleared when the server process restarts.
+
+## Delivery tracking and exports
+
+Signed-in customers can open an order to see its delivery neighborhood on a
+Leaflet map, live status updates over server-sent events, and an Addis-time
+order timestamp. Map markers are illustrative neighborhood locations; this
+demo does not collect courier GPS coordinates. The orders page can export the
+customer's order history as a quoted CSV file.

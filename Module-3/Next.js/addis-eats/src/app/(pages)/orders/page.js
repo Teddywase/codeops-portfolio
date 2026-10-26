@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getOrdersFor } from "../../../lib/db";
+import { formatDate, formatEtb } from "../../../lib/format";
 import { getSession } from "../../../lib/session";
+import OrdersCsvExport from "../../components/OrdersCsvExport";
 import styles from "./my-orders.module.css";
 
 export const metadata = {
@@ -39,31 +41,41 @@ export default async function OrdersPage() {
             </Link>
           </>
         ) : (
-          <ul className={styles.list}>
-            {orders.map((order) => (
-              <li className={styles.order} key={order.id}>
-                <Link
-                  className={styles.orderLink}
-                  href={`/orders/${encodeURIComponent(order.id)}`}
-                >
-                  <span>
-                    <strong>Order {order.id}</strong>
-                    <span className={styles.date}>
-                      {new Date(order.createdAt).toLocaleDateString("en-CA", {
-                        dateStyle: "medium",
-                      })}
-                    </span>
-                  </span>
-                  <span className={styles.summary}>
-                    <span>{order.status}</span>
+          <>
+            <OrdersCsvExport
+              orders={orders.map((order) => ({
+                orderId: order.id,
+                placedAt: formatDate(order.createdAt),
+                customer: order.name,
+                phone: order.phone,
+                address: order.address,
+                neighborhood: order.neighborhood,
+                status: order.status,
+                total: formatEtb(order.total),
+              }))}
+            />
+            <ul className={styles.list}>
+              {orders.map((order) => (
+                <li className={styles.order} key={order.id}>
+                  <Link
+                    className={styles.orderLink}
+                    href={`/orders/${encodeURIComponent(order.id)}`}
+                  >
                     <span>
-                      {order.total} {order.currency}
+                      <strong>Order {order.id}</strong>
+                      <span className={styles.date}>
+                        {formatDate(order.createdAt)}
+                      </span>
                     </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+                    <span className={styles.summary}>
+                      <span>{order.status}</span>
+                      <span>{formatEtb(order.total)}</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
         )}
       </section>
     </main>

@@ -39,6 +39,27 @@
   font-weight: 600;
 }
 
+.exportButton {
+  margin-bottom: 1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: #8f3a2c;
+  padding: 0.7rem 1rem;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.exportButton:hover {
+  background: #702b21;
+}
+
+.exportButton:focus-visible {
+  outline: 3px solid #a54830;
+  outline-offset: 3px;
+}
+
 .list {
   display: grid;
   gap: 0.75rem;

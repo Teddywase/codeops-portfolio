@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import AddToCartButton from "../../../components/AddToCartButton";
 import JsonLd from "../../../components/JsonLd";
+import { formatEtb } from "../../../../lib/format";
 import { getDish, getDishes } from "../../../../lib/menu";
 import { absoluteUrl } from "../../../../lib/site-url";
 import styles from "./dish-detail.module.css";
@@ -143,7 +144,7 @@ export default async function DishPage({ params }) {
           <div>
             <p className={styles.priceLabel}>Price</p>
             <p className={styles.price}>
-              {dish.currency} {dish.price}
+              {formatEtb(dish.price)}
             </p>
           </div>
           <div className={styles.actions}>

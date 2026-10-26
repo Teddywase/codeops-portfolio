@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getOrder } from "../../../../lib/db";
+import { formatDate } from "../../../../lib/format";
 import { getSession } from "../../../../lib/session";
+import MapPanel from "../../../components/MapPanel";
 import OrderStatus from "../../../components/OrderStatus";
 import styles from "../../../components/order-status.module.css";
 
@@ -44,7 +46,21 @@ export default async function OrderPage({ params }) {
         <p className={styles.orderId}>
           Order <strong>{order.id}</strong>
         </p>
+        <section className={styles.mapSection} aria-labelledby="delivery-map-title">
+          <h2 className={styles.mapHeading} id="delivery-map-title">
+            Delivery route
+          </h2>
+          <p className={styles.mapDescription}>
+            <strong>Delivery address:</strong> {order.address},{" "}
+            {order.neighborhood}. The courier pin shows a demonstration
+            position; exact GPS tracking is not available in this demo.
+          </p>
+          <MapPanel address={order.address} neighborhood={order.neighborhood} />
+        </section>
         <OrderStatus initialStatus={initialStatus} />
+        <p className={styles.updated}>
+          Order placed {formatDate(order.createdAt)}.
+        </p>
         <Link className={styles.backLink} href="/menu">
           Back to the menu
         </Link>

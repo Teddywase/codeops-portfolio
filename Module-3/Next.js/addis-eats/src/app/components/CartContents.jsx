@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { formatEtb } from "../../lib/format";
 import { useCart } from "../providers";
 import styles from "./cart-contents.module.css";
 
@@ -38,7 +39,7 @@ export default function CartContents() {
             <div className={styles.itemDetails}>
               <p className={styles.name}>{dish.name}</p>
               <p className={styles.unitPrice}>
-                {dish.currency || "ETB"} {dish.price} each
+                {formatEtb(dish.price)} each
               </p>
             </div>
             <div className={styles.controls}>
@@ -64,7 +65,7 @@ export default function CartContents() {
                 </button>
               </div>
               <p className={styles.price}>
-                {dish.currency || "ETB"} {dish.price * quantity}
+                {formatEtb(dish.price * quantity)}
               </p>
               <button
                 className={styles.removeButton}
@@ -81,7 +82,7 @@ export default function CartContents() {
       <div className={styles.total}>
         <div>
           <span>Subtotal</span>
-          <span className={styles.price}>ETB {subtotal}</span>
+          <span className={styles.price}>{formatEtb(subtotal)}</span>
         </div>
         <p>Taxes and delivery are calculated at checkout.</p>
       </div>

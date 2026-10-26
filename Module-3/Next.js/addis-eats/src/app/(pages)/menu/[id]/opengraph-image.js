@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import ShareCard from "../../../components/ShareCard";
+import { formatEtb } from "../../../../lib/format";
 import { getDish } from "../../../../lib/menu";
 
 export const alt = "Ethiopian food from Addis Eats";
@@ -46,7 +47,7 @@ export default async function OpenGraphImage({ params }) {
         title={dish.nameEn}
         description={dish.tagline || dish.description}
         image={imageSrc}
-        price={`${dish.currency} ${dish.price}`}
+        price={formatEtb(dish.price)}
       />
     ),
     size,

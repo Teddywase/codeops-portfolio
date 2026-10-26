@@ -18,6 +18,12 @@ import { ORDER_NEIGHBORHOODS } from "./schema";
 const ordersStoreKey = Symbol.for("addis-eats.mockOrders");
 const mockOrders =
   globalThis[ordersStoreKey] ?? (globalThis[ordersStoreKey] = []);
+const orderStatusSubscribersKey = Symbol.for(
+  "addis-eats.orderStatusSubscribers",
+);
+const orderStatusSubscribers =
+  globalThis[orderStatusSubscribersKey] ??
+  (globalThis[orderStatusSubscribersKey] = new Map());
 
 const demoUsersStoreKey = Symbol.for("addis-eats.demoUsers");
 const demoUsers =
@@ -106,6 +112,39 @@ export async function createOrder(data, userId) {
 export async function getOrder(id) {
   const order = mockOrders.find((order) => order.id === id);
   return order || null;
+}
+
+export function subscribeToOrderStatus(id, listener) {
+  let listeners = orderStatusSubscribers.get(id);
+  if (!listeners) {
+    listeners = new Set();
+    orderStatusSubscribers.set(id, listeners);
+  }
+
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+    if (listeners.size === 0) {
+      orderStatusSubscribers.delete(id);
+    }
+  };
+}
+
+function publishOrderStatus(order) {
+  const listeners = orderStatusSubscribers.get(order.id);
+  if (!listeners) {
+    return;
+  }
+
+  const status = {
+    id: order.id,
+    status: order.status,
+    updatedAt: order.updatedAt ?? order.createdAt,
+  };
+
+  for (const listener of listeners) {
+    listener(status);
+  }
 }
 
 export async function getOrdersFor(userId) {
@@ -227,6 +266,7 @@ export async function markCancelled(id) {
 
   order.status = "CANCELLED";
   order.updatedAt = new Date().toISOString();
+  publishOrderStatus(order);
   return order;
 }
 
