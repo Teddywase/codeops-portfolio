@@ -4,6 +4,7 @@
  */
 import "server-only";
 import {
+  createHash,
   randomBytes,
   randomUUID,
   scryptSync,
@@ -18,6 +19,9 @@ import { ORDER_NEIGHBORHOODS } from "./schema";
 const ordersStoreKey = Symbol.for("addis-eats.mockOrders");
 const mockOrders =
   globalThis[ordersStoreKey] ?? (globalThis[ordersStoreKey] = []);
+const orderRequestsKey = Symbol.for("addis-eats.orderRequests");
+const orderRequests =
+  globalThis[orderRequestsKey] ?? (globalThis[orderRequestsKey] = new Map());
 const orderStatusSubscribersKey = Symbol.for(
   "addis-eats.orderStatusSubscribers",
 );
@@ -27,23 +31,44 @@ const orderStatusSubscribers =
 
 const demoUsersStoreKey = Symbol.for("addis-eats.demoUsers");
 const demoUsers =
-  globalThis[demoUsersStoreKey] ??
-  (globalThis[demoUsersStoreKey] = [
-    {
-      id: "user_addis_staff_101",
-      name: "Addis Eats Kitchen",
-      email: "kitchen@example.com",
-      role: "staff",
-      passwordSalt: "addis-eats-staff-v1",
-      passwordHash:
-        "4bb6f52154b0ad24052219d276aae79b8a5b97cc496d8317d55da72601ba1c64ae404ce381e87620ae49f5d32303d1deec77a0782b31a4424edb200348ae4f35",
-    },
-  ]);
-const retiredDemoCustomerIds = new Set(["user_addis_101", "user_addis_102"]);
+  globalThis[demoUsersStoreKey] ?? (globalThis[demoUsersStoreKey] = []);
+const retiredDemoUserIds = new Set([
+  "user_addis_staff_101",
+  "user_addis_101",
+  "user_addis_102",
+]);
 for (let index = demoUsers.length - 1; index >= 0; index -= 1) {
-  if (retiredDemoCustomerIds.has(demoUsers[index].id)) {
+  if (retiredDemoUserIds.has(demoUsers[index].id)) {
     demoUsers.splice(index, 1);
   }
+}
+
+const kitchenStaffEmail = process.env.KITCHEN_STAFF_EMAIL?.trim().toLowerCase();
+const kitchenStaffPassword = process.env.KITCHEN_STAFF_PASSWORD;
+
+if (Boolean(kitchenStaffEmail) !== Boolean(kitchenStaffPassword)) {
+  throw new Error(
+    "Set both KITCHEN_STAFF_EMAIL and KITCHEN_STAFF_PASSWORD to enable staff access.",
+  );
+}
+
+if (kitchenStaffPassword && kitchenStaffPassword.length < 16) {
+  throw new Error("KITCHEN_STAFF_PASSWORD must be at least 16 characters.");
+}
+
+if (kitchenStaffEmail && kitchenStaffPassword) {
+  const passwordSalt = randomBytes(16).toString("hex");
+
+  demoUsers.push({
+    id: "user_addis_staff_101",
+    name: "Addis Eats Kitchen",
+    email: kitchenStaffEmail,
+    role: "staff",
+    passwordSalt,
+    passwordHash: scryptSync(kitchenStaffPassword, passwordSalt, 64).toString(
+      "hex",
+    ),
+  });
 }
 
 const dummyPasswordSalt = "addis-eats-dummy-v1";
@@ -79,6 +104,13 @@ export const db = {
   },
 };
 
+export class OrderIdempotencyConflictError extends Error {
+  constructor() {
+    super("An order request key cannot be reused with different details.");
+    this.name = "OrderIdempotencyConflictError";
+  }
+}
+
 /**
  * Fetch a single dish by ID
  */
@@ -89,9 +121,27 @@ export async function getDish(id) {
 /**
  * Create a new order in memory
  */
-export async function createOrder(data, userId) {
+export async function createOrder(data, userId, requestId) {
   if (typeof userId !== "string" || !userId) {
     throw new Error("An authenticated user is required to create an order.");
+  }
+
+  if (typeof requestId !== "string" || !requestId) {
+    throw new Error("An idempotency key is required to create an order.");
+  }
+
+  const requestKey = JSON.stringify([userId, requestId]);
+  const fingerprint = createHash("sha256")
+    .update(JSON.stringify(data))
+    .digest("hex");
+  const previousRequest = orderRequests.get(requestKey);
+
+  if (previousRequest) {
+    if (previousRequest.fingerprint !== fingerprint) {
+      throw new OrderIdempotencyConflictError();
+    }
+
+    return previousRequest.order;
   }
 
   const newOrder = {
@@ -103,6 +153,7 @@ export async function createOrder(data, userId) {
   };
 
   mockOrders.push(newOrder);
+  orderRequests.set(requestKey, { fingerprint, order: newOrder });
   return newOrder;
 }
 

@@ -20,14 +20,14 @@ const deliveryCenters = {
 const courierIcon = L.divIcon({
   className: styles.marker,
   html: '<span class="courier" aria-hidden="true"></span>',
-  iconSize: [28, 28],
-  iconAnchor: [14, 14],
+  iconSize: [44, 44],
+  iconAnchor: [22, 22],
 });
 const deliveryIcon = L.divIcon({
   className: styles.marker,
   html: '<span class="delivery" aria-hidden="true"></span>',
-  iconSize: [28, 28],
-  iconAnchor: [14, 14],
+  iconSize: [44, 44],
+  iconAnchor: [22, 22],
 });
 
 export default function DeliveryMap({ address, neighborhood }) {

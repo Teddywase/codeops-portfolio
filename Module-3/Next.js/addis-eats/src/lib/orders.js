@@ -1,14 +1,15 @@
 import "server-only";
 
-import { createOrder } from "./db";
+import { createOrder, OrderIdempotencyConflictError } from "./db";
 import { getDish } from "./menu";
 import { getSession } from "./session";
 
 export class OrderRequestError extends Error {
-  constructor(message, fieldErrors = {}) {
+  constructor(message, fieldErrors = {}, refreshRequestId = false) {
     super(message);
     this.name = "OrderRequestError";
     this.fieldErrors = fieldErrors;
+    this.refreshRequestId = refreshRequestId;
   }
 }
 
@@ -51,19 +52,33 @@ export async function createCustomerOrder(data) {
     };
   });
   const total = items.reduce((sum, item) => sum + item.lineTotal, 0);
-  const order = await createOrder(
-    {
-      name: data.name,
-      phone: data.phone,
-      neighborhood: data.neighborhood,
-      address: data.address,
-      notes: data.notes,
-      items,
-      total,
-      currency: "ETB",
-    },
-    session.id,
-  );
+  let order;
+  try {
+    order = await createOrder(
+      {
+        name: data.name,
+        phone: data.phone,
+        neighborhood: data.neighborhood,
+        address: data.address,
+        notes: data.notes,
+        items,
+        total,
+        currency: "ETB",
+      },
+      session.id,
+      data.requestId,
+    );
+  } catch (error) {
+    if (error instanceof OrderIdempotencyConflictError) {
+      throw new OrderRequestError(
+        "This checkout attempt was already used with different details. Review your order and submit again.",
+        {},
+        true,
+      );
+    }
+
+    throw error;
+  }
 
   return {
     id: order.id,

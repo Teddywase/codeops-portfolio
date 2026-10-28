@@ -31,6 +31,9 @@
     flex-wrap: wrap;
 }
 .navlinks a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
     border-radius: 0.6rem;
     color: #52372e;
     padding: 0.55rem 0.7rem;
@@ -55,6 +58,7 @@
 }
 .auth-button {
     display: inline-flex;
+    min-height: 2.75rem;
     align-items: center;
     justify-content: center;
     background: #f7f4f2;

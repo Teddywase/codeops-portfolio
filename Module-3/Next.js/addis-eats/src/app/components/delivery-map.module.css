@@ -6,8 +6,16 @@
 }
 
 .marker {
+  display: grid;
+  place-items: center;
   border: 0;
   background: transparent;
+}
+
+.map :global(.leaflet-control-zoom a) {
+  width: 2.75rem;
+  height: 2.75rem;
+  line-height: 2.75rem;
 }
 
 .marker span {

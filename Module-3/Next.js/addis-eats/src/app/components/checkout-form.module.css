@@ -198,7 +198,9 @@
 }
 
 .backLink {
-  display: inline-block;
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
   margin-top: 1.25rem;
   color: #713d2e;
   font-size: 0.9rem;

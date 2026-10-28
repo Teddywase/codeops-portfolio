@@ -89,8 +89,6 @@ export default async function SignInPage({ searchParams }) {
           <Link href={`/signup?next=${encodeURIComponent(destination)}`}>
             Create an account
           </Link>
-          <br />
-          Demo staff: kitchen@example.com · Kitchen42!
         </p>
       </section>
     </main>

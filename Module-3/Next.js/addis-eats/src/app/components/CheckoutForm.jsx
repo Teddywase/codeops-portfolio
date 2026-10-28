@@ -1,10 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useEffect, useState } from "react";
+import {
+  useActionState,
+  useCallback,
+  useEffect,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { cancelOrder, placeOrder } from "../actions";
 import { useCart } from "../providers";
 import {
+  ORDER_REQUEST_CHANGED_EVENT,
+  ORDER_REQUEST_STORAGE_KEY,
   ORDER_TRACKING_CHANGED_EVENT,
   ORDER_TRACKING_STORAGE_KEY,
 } from "../../lib/order-tracking";
@@ -12,7 +20,7 @@ import { formatEtb } from "../../lib/format";
 import { orderSchema, ORDER_NEIGHBORHOODS } from "../../lib/schema";
 import styles from "./checkout-form.module.css";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ initialRequestId }) {
   const { items, subtotal, hasHydrated, clearCart } = useCart();
   const [state, formAction, isPending] = useActionState(placeOrder, null);
   const [cancelState, cancelFormAction, isCancelPending] = useActionState(
@@ -20,11 +28,67 @@ export default function CheckoutForm() {
     null,
   );
   const [clientErrors, setClientErrors] = useState(null);
+  const subscribeToRequestId = useCallback((onStoreChange) => {
+    function handleStorageChange(event) {
+      if (event.key === ORDER_REQUEST_STORAGE_KEY || event.key === null) {
+        onStoreChange();
+      }
+    }
+
+    window.addEventListener(ORDER_REQUEST_CHANGED_EVENT, onStoreChange);
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener(ORDER_REQUEST_CHANGED_EVENT, onStoreChange);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+  const getRequestId = useCallback(() => {
+    const storedRequestId = window.localStorage.getItem(ORDER_REQUEST_STORAGE_KEY);
+    return orderSchema.shape.requestId.safeParse(storedRequestId).success
+      ? storedRequestId
+      : initialRequestId;
+  }, [initialRequestId]);
+  const getServerRequestId = useCallback(
+    () => initialRequestId,
+    [initialRequestId],
+  );
+  const requestId = useSyncExternalStore(
+    subscribeToRequestId,
+    getRequestId,
+    getServerRequestId,
+  );
+
+  useEffect(() => {
+    const storedRequestId = window.localStorage.getItem(
+      ORDER_REQUEST_STORAGE_KEY,
+    );
+
+    if (!orderSchema.shape.requestId.safeParse(storedRequestId).success) {
+      window.localStorage.setItem(ORDER_REQUEST_STORAGE_KEY, initialRequestId);
+      window.dispatchEvent(new Event(ORDER_REQUEST_CHANGED_EVENT));
+    }
+  }, [getRequestId, initialRequestId]);
+
+  useEffect(() => {
+    if (!state?.refreshRequestId) {
+      return;
+    }
+
+    const refreshedRequestId = window.crypto.randomUUID();
+    window.localStorage.setItem(
+      ORDER_REQUEST_STORAGE_KEY,
+      refreshedRequestId,
+    );
+    window.dispatchEvent(new Event(ORDER_REQUEST_CHANGED_EVENT));
+  }, [state]);
 
   useEffect(() => {
     if (state?.order) {
       clearCart();
       window.localStorage.setItem(ORDER_TRACKING_STORAGE_KEY, state.order.id);
+      window.localStorage.removeItem(ORDER_REQUEST_STORAGE_KEY);
+      window.dispatchEvent(new Event(ORDER_REQUEST_CHANGED_EVENT));
       window.dispatchEvent(new Event(ORDER_TRACKING_CHANGED_EVENT));
     }
   }, [state, clearCart]);
@@ -137,6 +201,7 @@ export default function CheckoutForm() {
       neighborhood: formData.get("neighborhood"),
       address: formData.get("address"),
       notes: formData.get("notes"),
+      requestId: formData.get("requestId"),
       items: submittedItems,
     });
 
@@ -153,12 +218,14 @@ export default function CheckoutForm() {
     <div className={styles.layout}>
       <form
         action={formAction}
+        aria-busy={isPending}
         className={styles.form}
         noValidate
         onSubmit={validateOrder}
       >
         <h2>Delivery details</h2>
         <input name="items" type="hidden" value={orderItems} />
+        <input name="requestId" type="hidden" value={requestId} />
 
         {(clientErrors || state?.error) && (
           <p className={styles.formError} role="alert">
@@ -271,7 +338,7 @@ export default function CheckoutForm() {
 
         <button
           className={styles.primaryButton}
-          disabled={isPending}
+          disabled={isPending || !requestId}
           type="submit"
         >
           {isPending

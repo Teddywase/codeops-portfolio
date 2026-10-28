@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { redirect } from "next/navigation";
 import CheckoutForm from "../../components/CheckoutForm";
 import { getSession } from "../../../lib/session";
@@ -31,7 +32,7 @@ export default async function CheckoutPage() {
             Add your delivery details and review your order.
           </p>
         </header>
-        <CheckoutForm />
+        <CheckoutForm initialRequestId={randomUUID()} />
       </div>
     </main>
   );

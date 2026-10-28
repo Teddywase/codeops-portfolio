@@ -117,13 +117,15 @@ redirect destinations are validated with `getSafeRedirectPath`.
 
 ## Demo accounts and limitations
 
-- Customer Abebe: `abebe@example.com` / `AddisEats42!`
-- Customer Liya: `liya@example.com` / `LiyaEats42!`
-- Staff: `kitchen@example.com` / `Kitchen42!`
+There are no shared demo credentials. Customer accounts are created through
+`/signup`. To enable a staff account locally, set `KITCHEN_STAFF_EMAIL` and a
+unique `KITCHEN_STAFF_PASSWORD` (at least 16 characters) in the untracked
+`.env.local` file; configure them as private environment variables in the
+deployment platform. Do not expose the password in the sign-in page, source,
+or a `NEXT_PUBLIC_` variable.
 
-The two customer accounts let you test owner-scoped order lists and record
-access. New customer registrations are also stored in memory and reset when
-the server restarts. Users, orders, and sessions are unsuitable for deployment.
-The passwords are demo credentials. Production authentication should use a
-maintained library, persistent storage, HTTPS, rate limiting, recovery flows,
-and secure operational session management.
+Registrations, staff accounts, sessions, and orders are stored in memory and
+reset when the server restarts. Users, orders, and sessions are unsuitable for
+production. Production authentication should use a maintained library,
+persistent storage, HTTPS, rate limiting, recovery flows, and secure
+operational session management.

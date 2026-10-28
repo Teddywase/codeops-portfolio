@@ -20,3 +20,12 @@ body {
   flex-direction: column;
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
+
+button {
+  min-height: 2.75rem;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid #713024;
+  outline-offset: 3px;
+}

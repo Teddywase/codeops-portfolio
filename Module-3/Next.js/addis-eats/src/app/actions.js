@@ -44,6 +44,7 @@ export async function placeOrder(_previousState, formData) {
     neighborhood: getFormString(formData, "neighborhood"),
     address: getFormString(formData, "address"),
     notes: getFormString(formData, "notes"),
+    requestId: getFormString(formData, "requestId"),
     items,
   });
 
@@ -65,7 +66,11 @@ export async function placeOrder(_previousState, formData) {
     return { order };
   } catch (error) {
     if (error instanceof OrderRequestError) {
-      return { error: error.message, fieldErrors: error.fieldErrors };
+      return {
+        error: error.message,
+        fieldErrors: error.fieldErrors,
+        refreshRequestId: error.refreshRequestId,
+      };
     }
 
     if (error instanceof UnauthenticatedOrderError) {

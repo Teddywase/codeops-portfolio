@@ -113,7 +113,7 @@
 
 .card :global(button) {
   justify-self: start;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   min-width: 9.5rem;
   padding: 0.55rem 1rem;
   font-size: 0.875rem;

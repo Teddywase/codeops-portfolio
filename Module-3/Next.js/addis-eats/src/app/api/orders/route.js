@@ -21,7 +21,10 @@ export async function POST(request) {
     );
   }
 
-  const parsedOrder = orderSchema.safeParse(body);
+  const parsedOrder = orderSchema.safeParse({
+    ...body,
+    requestId: request.headers.get("Idempotency-Key") ?? body?.requestId,
+  });
 
   if (!parsedOrder.success) {
     return Response.json(
@@ -39,7 +42,11 @@ export async function POST(request) {
   } catch (error) {
     if (error instanceof OrderRequestError) {
       return Response.json(
-        { error: error.message, fieldErrors: error.fieldErrors },
+        {
+          error: error.message,
+          fieldErrors: error.fieldErrors,
+          refreshRequestId: error.refreshRequestId,
+        },
         { status: 422 },
       );
     }

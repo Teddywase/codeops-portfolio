@@ -101,6 +101,7 @@
 
 .backLink {
   display: inline-flex;
+  min-height: 2.75rem;
   margin-top: 0.25rem;
   color: #8f3a2c;
   font-weight: 600;

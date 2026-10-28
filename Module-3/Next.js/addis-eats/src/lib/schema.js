@@ -14,6 +14,7 @@ const orderItemSchema = z.object({
 });
 
 export const orderSchema = z.object({
+  requestId: z.string().uuid("Refresh checkout before placing your order."),
   name: z.string().trim().min(2, "Name must be at least 2 characters.").max(80),
   phone: z
     .string()
