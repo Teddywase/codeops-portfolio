@@ -3,6 +3,8 @@
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+require_once __DIR__ . '/../app/Support/Pricing.php'; // Modify according to actual path
+
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
@@ -23,9 +25,9 @@ Route::get('/areas', function (){
 
 Route::get('/quote', function(){
     $lines = [
-        ['item' => 'Doro Wat', 'qty' => 2, 'price' => 500.00],
-        ['item' => 'Tibs', 'qty' => 1, 'price' => 300.00],
-        ['item' => 'Shiro', 'qty' => 3, 'price' => 180.00],
+        ['item' => 'Doro Wat', 'qty' => 2, 'price' => 500],
+        ['item' => 'Tibs', 'qty' => 1, 'price' => 300],
+        ['item' => 'Shiro', 'qty' => 3, 'price' => 180],
     ];
 
     $area = 'Bole';
