@@ -1,0 +1,14 @@
+[
+    { "name": "Doro Wat",        "restaurant": "Habesha Kitchen", "price": 42000, "isFasting": false },
+    { "name": "Shiro",           "restaurant": "Habesha Kitchen", "price": 18000, "isFasting": true  },
+    { "name": "Tibs",            "restaurant": "Habesha Kitchen", "price": 50000, "isFasting": false },
+    { "name": "Kitfo",           "restaurant": "Habesha Kitchen", "price": 45000, "isFasting": false },
+    { "name": "Misir Wat",       "restaurant": "Bole Vegan",      "price": 15000, "isFasting": true  },
+    { "name": "Gomen",           "restaurant": "Bole Vegan",      "price": 12000, "isFasting": true  },
+    { "name": "Atkilt",          "restaurant": "Bole Vegan",      "price": 10000, "isFasting": true  },
+    { "name": "Fasting Platter", "restaurant": "Bole Vegan",      "price": 22000, "isFasting": true  },
+    { "name": "Pizza Margherita","restaurant": "Piassa Pizzeria", "price": 32000, "isFasting": false },
+    { "name": "Pasta Bolognese", "restaurant": "Piassa Pizzeria", "price": 28000, "isFasting": false },
+    { "name": "Garlic Bread",    "restaurant": "Piassa Pizzeria", "price": 8000,  "isFasting": true  },
+    { "name": "Tiramisu",        "restaurant": "Piassa Pizzeria", "price": 15000, "isFasting": false }
+]
