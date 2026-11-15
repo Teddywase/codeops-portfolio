@@ -6,6 +6,9 @@ use App\Domain\Dish;
 use App\Domain\MenuService;
 use App\Exceptions\OutsideZoneException;
 use Illuminate\Support\Collection;
+use App\Http\Controllers\DishController;
+use App\Http\Controllers\MenuController;
+
 
 require_once __DIR__ . '/../app/Support/Pricing.php'; // Modify according to actual path
 
@@ -18,16 +21,19 @@ Route::get('/health', function () {
         'status' => 'ok',
         'service' => 'adis-eats-api',
         'time' => now()->toIso8601String(),
-        ]);
-    });
-
-Route::get('/areas', function (){
-    return response()->json([
-        'Bole','Kazanchis','Piassa','Megenagna'
     ]);
 });
 
-Route::get('/quote', function(){
+Route::get('/areas', function () {
+    return response()->json([
+        'Bole',
+        'Kazanchis',
+        'Piassa',
+        'Megenagna'
+    ]);
+});
+
+Route::get('/quote', function () {
     $lines = [
         ['item' => 'Doro Wat', 'qty' => 2, 'price' => 500],
         ['item' => 'Tibs', 'qty' => 1, 'price' => 300],
@@ -39,20 +45,20 @@ Route::get('/quote', function(){
     $result = orderTotal($lines, $area);
 
     return response()->json([
-        'area'     => $area,
-        'lines'    => $lines,
+        'area' => $area,
+        'lines' => $lines,
         'subtotal' => $result['subtotal'],
-        'fee'      => $result['fee'],
-        'total'    => $result['total'],
+        'fee' => $result['fee'],
+        'total' => $result['total'],
     ]);
 });
 
 Route::get('/menu', function () {
-    $area   = request('area', 'Bole');
+    $area = request('area', 'Bole');
     $budget = (int) request('budget', 25000);
 
     $dishes = collect(json_decode(file_get_contents(base_path('dishes.json')), true))
-        ->map(fn (array $row) => new Dish(
+        ->map(fn(array $row) => new Dish(
             name: $row['name'],
             restaurant: $row['restaurant'],
             price: $row['price'],
@@ -64,7 +70,18 @@ Route::get('/menu', function () {
     } catch (OutsideZoneException $e) {
         return response()->json([
             'error' => $e->getMessage(),
-            'area'  => $e->area,
+            'area' => $e->area,
         ], 422);
     }
 });
+
+
+Route::get('/dishes', [DishController::class, 'index']);
+Route::post('/dishes', [DishController::class, 'store']);
+
+Route::get('/dishes/{id}/detail/{num}', [DishController::class, 'show'])
+    ->whereNumber('id')
+    ->name('dishes.show');
+
+
+Route::get('/menu', [MenuController::class,'index']);
