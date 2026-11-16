@@ -4,12 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Domain\OrderStatus;
+use App\Enum\OrderStatus;
 
 class Dish extends Model
 {
     /** @use HasFactory<\Database\Factories\DishFactory> */
     use HasFactory;
+
+    protected $table = 'dishes';
+
+    protected $primaryKey = 'id';
     protected $fillable = [
         'name',
         'restaurant',

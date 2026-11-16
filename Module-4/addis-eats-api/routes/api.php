@@ -75,13 +75,17 @@ Route::get('/menu', function () {
     }
 });
 
-
-Route::get('/dishes', [DishController::class, 'index']);
-Route::post('/dishes', [DishController::class, 'store']);
-
-Route::get('/dishes/{id}/detail/{num}', [DishController::class, 'show'])
-    ->whereNumber('id')
-    ->name('dishes.show');
+Route::prefix('v1')->group(function () {
+    Route::apiResource('dishes', DishController::class);
+});
 
 
-Route::get('/menu', [MenuController::class,'index']);
+// Route::get('/dishes', [DishController::class, 'index']);
+// Route::post('/dishes', [DishController::class, 'store']);
+
+// Route::get('/dishes/{id}/detail/{num}', [DishController::class, 'show'])
+//     ->whereNumber('id')
+//     ->name('dishes.show');
+
+
+// Route::get('/menu', [MenuController::class,'index']);

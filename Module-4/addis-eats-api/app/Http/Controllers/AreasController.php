@@ -13,6 +13,6 @@ class AreasController extends Controller
             ['name' => 'Shiro', 'price' => 18000],
         ];
 
-        return $names = array_map(fn($id) => $d ['name'], $menu);
+        return $names = array_map(fn($id) => ['name'], $menu);
     }
 }
