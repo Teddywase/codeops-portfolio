@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class RestaurantController extends Controller
 {
     /**
-     * GET /api/restaurants
+     * GET /api/v1/restaurants
      * List all restaurants (with an option to include their dishes)
      */
     public function index()
@@ -22,7 +22,7 @@ class RestaurantController extends Controller
     }
 
     /**
-     * POST /api/restaurants
+     * POST /api/v1/restaurants
      * Create a new restaurant (Admin feature)
      */
     public function store(Request $request)
@@ -37,13 +37,14 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::create($validated);
 
         return response()->json([
+            'success' => true,
             'message' => 'Restaurant created successfully',
             'data' => $restaurant
         ], 201);
     }
 
     /**
-     * GET /api/restaurants/{id}
+     * GET /api/v1/restaurants/{id}
      * Show a single restaurant and its dishes
      */
     public function show($id)
@@ -58,7 +59,7 @@ class RestaurantController extends Controller
     }
 
     /**
-     * PUT/PATCH /api/restaurants/{id}
+     * PUT/PATCH /api/v1/restaurants/{id}
      * Update an existing restaurant
      */
     public function update(Request $request, $id)
@@ -81,11 +82,11 @@ class RestaurantController extends Controller
         return response()->json([
             'message' => 'Restaurant updated successfully',
             'data' => $restaurant
-        ]);
+        ], 201);
     }
 
     /**
-     * DELETE /api/restaurants/{id}
+     * DELETE /api/v1/restaurants/{id}
      * Delete a restaurant
      */
     public function destroy($id)
