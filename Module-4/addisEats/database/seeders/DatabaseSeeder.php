@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Restaurant;
+use App\Models\Dish;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,5 +23,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        Restaurant::factory()->count(5)->create();
+
+        Restaurant::all()->each(function ($restaurant) {
+            Dish::factory(5)->create([
+                'restaurant_id' => $restaurant->id,
+                'area' => $restaurant->area,
+            ]);
+        });
+
+
     }
 }

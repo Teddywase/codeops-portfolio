@@ -8,23 +8,15 @@ use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
-    /**
-     * GET /api/v1/restaurants
-     * List all restaurants (with an option to include their dishes)
-     */
+    
     public function index()
     {
-        // 'with('dishes')' solves the "with its dishes as a relationship" requirement.
-        // Eager loading this prevents N+1 query problems.
         $restaurants = Restaurant::with('dishes')->paginate(10);
 
         return response()->json($restaurants);
     }
 
-    /**
-     * POST /api/v1/restaurants
-     * Create a new restaurant (Admin feature)
-     */
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -43,10 +35,7 @@ class RestaurantController extends Controller
         ], 201);
     }
 
-    /**
-     * GET /api/v1/restaurants/{id}
-     * Show a single restaurant and its dishes
-     */
+    
     public function show($id)
     {
         $restaurant = Restaurant::with('dishes')->find($id);
@@ -58,10 +47,7 @@ class RestaurantController extends Controller
         return response()->json($restaurant);
     }
 
-    /**
-     * PUT/PATCH /api/v1/restaurants/{id}
-     * Update an existing restaurant
-     */
+
     public function update(Request $request, $id)
     {
         $restaurant = Restaurant::find($id);
@@ -85,10 +71,6 @@ class RestaurantController extends Controller
         ], 201);
     }
 
-    /**
-     * DELETE /api/v1/restaurants/{id}
-     * Delete a restaurant
-     */
     public function destroy($id)
     {
         $restaurant = Restaurant::find($id);
@@ -97,8 +79,6 @@ class RestaurantController extends Controller
             return response()->json(['message' => 'Restaurant not found'], 404);
         }
 
-        // Because we set cascadeOnDelete() in the migrations, 
-        // deleting the restaurant will automatically delete its dishes!
         $restaurant->delete();
 
         return response()->json(['message' => 'Restaurant deleted successfully']);

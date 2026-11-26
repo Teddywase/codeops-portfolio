@@ -34,7 +34,10 @@ Route::get('/health', function () {
 
 Route::prefix('v1')->group(function () {
 
-    Route::post('/dishes', [DishController::class, 'store']);
+    Route::controller(DishController::class)->group(function () {
+        Route::get('/dishes', 'index');
+        Route::post('/dishes', 'store');
+    });
 
     Route::controller(RestaurantController::class)->group(function () {
         Route::get('/restaurants', 'index');
