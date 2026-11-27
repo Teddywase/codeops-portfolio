@@ -36,6 +36,7 @@ Route::prefix('v1')->group(function () {
 
     Route::controller(DishController::class)->group(function () {
         Route::get('/dishes', 'index');
+        Route::get('/dishes/{id}', 'show');
         Route::post('/dishes', 'store');
     });
 

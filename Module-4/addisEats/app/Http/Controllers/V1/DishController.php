@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DishResource;
 use App\Models\Dish;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,9 @@ class DishController extends Controller
             $query->where('area', $request->area);
         }
 
-        return response()->json($query->paginate(10)); 
+        $dishes = $query->paginate(10);
+
+        return DishResource::collection($dishes);
     }
 
     public function store(Request $request) {

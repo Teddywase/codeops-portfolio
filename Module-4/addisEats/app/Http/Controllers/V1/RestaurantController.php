@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RestaurantResource;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,11 @@ class RestaurantController extends Controller
     
     public function index()
     {
-        $restaurants = Restaurant::with('dishes')->paginate(10);
+        // $restaurants = Restaurant::with('dishes')->paginate(10);
+        // return response()->json($restaurants);
 
-        return response()->json($restaurants);
+        $restaurants = Restaurant::with('dishes')->get();
+        return RestaurantResource::collection($restaurants);
     }
 
 
